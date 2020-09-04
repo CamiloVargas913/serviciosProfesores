@@ -1,3 +1,4 @@
 co\edu\ucundinamarca\controller\ProfesoController.class
+org\netbeans\rest\application\config\ApplicationConfig.class
 co\edu\ucundinamarca\logica\ProfesorService.class
 co\edu\ucundinamarca\pojo\Profesor.class

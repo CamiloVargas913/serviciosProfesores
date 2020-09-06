@@ -32,15 +32,14 @@ public class ProfesoController {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response insertarProfesor(@Valid Profesor profesor) {    
-        System.out.println("info");
-        /*try {
+        try {
             ProfesorService profesoragregar = new ProfesorService();
             profesoragregar.registroProfesor(profesor);
             return Response.status(Response.Status.CREATED).entity("Insercion correcta").build();
         } catch (Exception ex) {
+            System.out.println(ex);
             return Response.status(Response.Status.BAD_REQUEST).entity("Error al insertar").build();
-        }*/
-        return Response.status(Response.Status.CREATED).build();
+        }
     }
 
     @Path("/editar")

@@ -28,7 +28,11 @@ import javax.ws.rs.PathParam;
 @Stateless
 @Path("/profesores")
 public class ProfesoController {
-
+    /**
+     * metodo que recibe la peticion http e insterta un profesor 
+     * @param profesor
+     * @return Response codigo http
+     */
     @Path("/insertar")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
@@ -43,13 +47,23 @@ public class ProfesoController {
             return Response.status(Response.Status.BAD_REQUEST).entity("Error al insertar").build();
         }
     }
-
+    /**
+     * metodo que recibe la peticion http y modifica un profesor 
+     * @param profesor
+     * @return Response codigo http
+     */
     @Path("/editar")
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response editarProfesor() {
-        return Response.status(Response.Status.OK).build();
+    public Response editarProfesor(@Valid Profesor profesor) {
+        ProfesorService profesoragregar = new ProfesorService();        
+        if(profesoragregar.editarProfesor(profesor)){
+            return Response.status(Response.Status.OK).entity("Modificado correctamente").build();
+        }else{
+             return Response.status(Response.Status.NOT_MODIFIED).entity("Error al modificar").build();
+        }
+        
     }
 
     @Path("/eliminar/{id}")
@@ -57,13 +71,14 @@ public class ProfesoController {
     @Produces(MediaType.APPLICATION_JSON)
     public Response eliminarProfesor(@PathParam("id") int id) {
         ProfesorService profesor = new ProfesorService();
-        String data = profesor.eliminarProfesor(id);
-        if (data.equals("El id no existe")) {
-            return Response.status(Response.Status.NO_CONTENT).entity("No existe el id").build();
-        } else {
-            return Response.status(Response.Status.OK).entity(data).build();
+        int data = profesor.eliminarProfesor(id);
+        if (data == 2) {
+            return Response.status(Response.Status.NOT_FOUND).entity("No existe el id").build();
+        } else if(data == 1) {
+            return Response.status(Response.Status.OK).entity("Eliminado Satisfactoriamente").build();
+        }else{
+            return Response.status(Response.Status.NO_CONTENT).entity("No existe fichero").build();
         }
-
     }
 
     @Path("/retornarProfesor")

@@ -25,24 +25,35 @@ import javax.ws.rs.core.Response;
  */
 public class ProfesorService {
 
+    /**
+     * listado de los profesores de tipo profesor
+     */
     List<Profesor> ListaProfesores = new ArrayList();
+    /**
+     * variable profesor de tipo profesor
+     */
     Profesor profesor = new Profesor();
 
+    /**
+     * metodo que recibe un objeto profesor y lo agrega a la lista de profesores
+     *
+     * @param profesor
+     */
     public void registroProfesor(Profesor profesor) {
         if (this.leer() != null) {
             this.ListaProfesores = this.leer();
         }
         this.ListaProfesores.add(profesor);
         this.llenarProfesor();
-        for (Profesor ListaProfesore : ListaProfesores) {
-            System.out.println(ListaProfesore.getApellido());
-        }
     }
 
+    /**
+     * metodo void que registra la lista de profesores en el fichero
+     */
     public void llenarProfesor() {
         FileOutputStream fos;
         try {
-            fos = new FileOutputStream("C:\\Users\\david\\Documents\\VIII Semestre\\Linea II\\serviciosProfesores\\archivo.txt");
+            fos = new FileOutputStream("E:\\archivo.txt");
             ObjectOutputStream db = new ObjectOutputStream(fos);
             db.writeObject(this.ListaProfesores);
             db.flush();
@@ -52,10 +63,15 @@ public class ProfesorService {
         }
     }
 
+    /**
+     * metodo que retorna la lista de los profesores registrados en el fichero
+     *
+     * @return lista Profesor
+     */
     public List<Profesor> leer() {
         FileInputStream fis;
         try {
-            fis = new FileInputStream("C:\\Users\\david\\Documents\\VIII Semestre\\Linea II\\serviciosProfesores\\archivo.txt");
+            fis = new FileInputStream("E:\\archivo.txt");
             ObjectInputStream ois = new ObjectInputStream(fis);
             return (List<Profesor>) ois.readObject();
         } catch (IOException | ClassNotFoundException ex) {
@@ -94,31 +110,47 @@ public class ProfesorService {
         }
     }
 
-    public String eliminarProfesor(int id) {
+    /**
+     *
+     * @param id
+     * @return
+     */
+    public int eliminarProfesor(int id) {
         if (this.leer() != null) {
             this.ListaProfesores = this.leer();
-            boolean bandera = true;
-            Iterator<Profesor> iterator = this.ListaProfesores.iterator();
-            while (iterator.hasNext()) {
-                Profesor datos = iterator.next();
-                if (id == datos.getId()) {
-                    iterator.remove();
+            boolean bandera = false;
+            for (Profesor ListaProfesore : ListaProfesores) {
+                if (ListaProfesore.getId() == id) {
+                    this.ListaProfesores.remove(ListaProfesore);
                     bandera = true;
-                } else {
-                    bandera = false;
+                    break;
                 }
-            }
-            for (Profesor ListaProfe : ListaProfesores) {
-                System.out.println(ListaProfe.getNombre());
             }
             if (bandera) {
                 this.llenarProfesor();
-                return "Eliminado correctamente";
+                return 1;
             } else {
-                return "El id no existe";
+                return 2;
             }
         } else {
-            return "No hay ningun profesor registrado";
+            return 3;
+        }
+
+    }
+
+    /**
+     * metodo que edita a un profeso
+     * @param profesor 
+     * @return boolean que valida si la edicion fue correcta 
+     */
+    public boolean editarProfesor(Profesor profesor) {
+        int validacion = this.eliminarProfesor(profesor.getId());
+        if (validacion == 1) {
+            this.registroProfesor(profesor);
+            this.llenarProfesor();
+            return true;
+        } else {
+            return false;
         }
 
     }

@@ -14,66 +14,144 @@ import javax.validation.constraints.Size;
  *
  * @author PROFESIONAL
  */
-public class Profesor implements Serializable{
+public class Profesor implements Serializable {
+
+    /**
+     * id que identifica al profesor
+     */
     @NotNull(message = "Campo requerido")
     private int id;
-    @NotNull(message = "Campo requerido")   
+    /**
+     * nombre del profesor
+     */
+    @NotNull(message = "Campo requerido")
     private String nombre;
+    /**
+     * apellido del profesor
+     */
     @NotNull(message = "Campo requerido")
     private String apellido;
+    /**
+     * listado de las materias que imparte
+     */
     @NotNull(message = "Campo requerido")
     private List<String> listaMateria;
+    /**
+     * correo personal del profesor
+     */
     @NotNull(message = "Campo requerido")
-    private String  correo;
+    private String correo;
+    /**
+     * cedula del profesor
+     */
     @NotNull(message = "Campo requerido")
     @Size(max = 25)
     private String cedula;
-    
+
+    /**
+     * metodo para obtener el id del profesor
+     *
+     * @return int
+     */
     public int getId() {
         return id;
     }
 
+    /**
+     * metodo para setear la valiable id
+     *
+     * @param id
+     */
     public void setId(int id) {
         this.id = id;
     }
 
+    /**
+     * metodo para obtener el nombre del profesor
+     *
+     * @return
+     */
     public String getNombre() {
         return nombre;
     }
 
+    /**
+     * metodo para setear el nombre
+     *
+     * @param nombre
+     */
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
+    /**
+     * metod para obtener el apellido del profesor
+     *
+     * @return
+     */
     public String getApellido() {
         return apellido;
     }
 
+    /**
+     * metodo para setear el valor del apellido
+     *
+     * @param apellido
+     */
     public void setApellido(String apellido) {
         this.apellido = apellido;
     }
 
+    /**
+     * metodo para obtener el listado de materias
+     *
+     * @return
+     */
     public List<String> getListaMateria() {
         return listaMateria;
     }
 
+    /**
+     * metodo para setear la lista de materias
+     *
+     * @param listaMateria
+     */
     public void setListaMateria(List<String> listaMateria) {
         this.listaMateria = listaMateria;
     }
 
+    /**
+     * metodo para obtener el correo del profesor
+     *
+     * @return
+     */
     public String getCorreo() {
         return correo;
     }
 
+    /**
+     * metodo para setear el valor del correo
+     *
+     * @param correo
+     */
     public void setCorreo(String correo) {
         this.correo = correo;
     }
 
+    /**
+     * metodo para obtener la cedula del profesor
+     *
+     * @return
+     */
     public String getCedula() {
         return cedula;
     }
 
+    /**
+     * metodo pars setear la cedula del profesor
+     * @param cedula
+     */
     public void setCedula(String cedula) {
         this.cedula = cedula;
     }
- }
+}

@@ -12,7 +12,7 @@ import javax.validation.constraints.Size;
 
 /**
  *
- * @author PROFESIONAL
+ * @author Camilo Vargas
  */
 public class Profesor implements Serializable {
 
@@ -60,7 +60,7 @@ public class Profesor implements Serializable {
     /**
      * metodo para setear la valiable id
      *
-     * @param id
+     * @param id variable para guardar el id del profesor
      */
     public void setId(int id) {
         this.id = id;
@@ -69,7 +69,7 @@ public class Profesor implements Serializable {
     /**
      * metodo para obtener el nombre del profesor
      *
-     * @return
+     * @return String
      */
     public String getNombre() {
         return nombre;
@@ -78,7 +78,7 @@ public class Profesor implements Serializable {
     /**
      * metodo para setear el nombre
      *
-     * @param nombre
+     * @param nombre variable para guardar el nombre del profesor
      */
     public void setNombre(String nombre) {
         this.nombre = nombre;
@@ -87,7 +87,7 @@ public class Profesor implements Serializable {
     /**
      * metod para obtener el apellido del profesor
      *
-     * @return
+     * @return String
      */
     public String getApellido() {
         return apellido;
@@ -96,7 +96,7 @@ public class Profesor implements Serializable {
     /**
      * metodo para setear el valor del apellido
      *
-     * @param apellido
+     * @param apellido variable para guardar el apellido del profesor
      */
     public void setApellido(String apellido) {
         this.apellido = apellido;
@@ -105,7 +105,7 @@ public class Profesor implements Serializable {
     /**
      * metodo para obtener el listado de materias
      *
-     * @return
+     * @return List
      */
     public List<String> getListaMateria() {
         return listaMateria;
@@ -114,7 +114,7 @@ public class Profesor implements Serializable {
     /**
      * metodo para setear la lista de materias
      *
-     * @param listaMateria
+     * @param listaMateria variable para guardar la lista de materias que dicta del profesor
      */
     public void setListaMateria(List<String> listaMateria) {
         this.listaMateria = listaMateria;
@@ -123,7 +123,7 @@ public class Profesor implements Serializable {
     /**
      * metodo para obtener el correo del profesor
      *
-     * @return
+     * @return String 
      */
     public String getCorreo() {
         return correo;
@@ -132,7 +132,7 @@ public class Profesor implements Serializable {
     /**
      * metodo para setear el valor del correo
      *
-     * @param correo
+     * @param correo variable para guardar el correo del profesor
      */
     public void setCorreo(String correo) {
         this.correo = correo;
@@ -141,7 +141,7 @@ public class Profesor implements Serializable {
     /**
      * metodo para obtener la cedula del profesor
      *
-     * @return
+     * @return String
      */
     public String getCedula() {
         return cedula;
@@ -149,7 +149,7 @@ public class Profesor implements Serializable {
 
     /**
      * metodo pars setear la cedula del profesor
-     * @param cedula
+     * @param cedula variable para guardar la cedula del profesor
      */
     public void setCedula(String cedula) {
         this.cedula = cedula;

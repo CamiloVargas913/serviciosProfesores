@@ -23,14 +23,14 @@ import javax.ws.rs.PathParam;
 
 /**
  *
- * @author PROFESIONAL
+ * @author Camilo Vargas
  */
 @Stateless
 @Path("/profesores")
 public class ProfesoController {
     /**
      * metodo que recibe la peticion http e insterta un profesor 
-     * @param profesor
+     * @param profesor Variable que trae los datos del profesor
      * @return Response codigo http
      */
     @Path("/insertar")
@@ -49,7 +49,6 @@ public class ProfesoController {
     }
     /**
      * metodo que recibe la peticion http y modifica un profesor 
-     * @param profesor
      * @return Response codigo http
      */
     @Path("/editar")
@@ -66,6 +65,11 @@ public class ProfesoController {
         
     }
 
+    /**
+     * Metodo que recibe la peticion HTTP y elimina un profesor dependiendo el ID
+     * @param id variable para saber el profesor a eliminar
+     * @return Response codigo HTTP
+     */
     @Path("/eliminar/{id}")
     @DELETE
     @Produces(MediaType.APPLICATION_JSON)
@@ -81,6 +85,10 @@ public class ProfesoController {
         }
     }
 
+    /**
+     * Metodo que recibe la peticion HTTP y retorna todos los profesores registrados
+     * @return Response codigo HTTP
+     */
     @Path("/retornarProfesor")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -94,6 +102,11 @@ public class ProfesoController {
         }
     }
 
+    /**
+     * Metodo que recibe la peticion HTTP y retorna un profesor dependiendo la cedula
+     * @param cedula variable para saber el profesor que se debe retornar
+     * @return Response codigo HTTP
+     */
     @Path("/retornarProfesorCc/{cedula}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -107,6 +120,11 @@ public class ProfesoController {
         }
     }
 
+    /**
+     * Metodo que recibe la peticion HTTP y retorna un profesor dependiendo la materia que dicta
+     * @param materia Variable para saber que por que materia filtrar 
+     * @return Response codigo HTTP
+     */
     @Path("/retornarProfesorMateria/{materia}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)

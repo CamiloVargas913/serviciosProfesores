@@ -21,7 +21,7 @@ import javax.ws.rs.core.Response;
 
 /**
  *
- * @author PROFESIONAL
+ * @author David Márquez
  */
 public class ProfesorService {
 
@@ -79,6 +79,11 @@ public class ProfesorService {
         }
     }
 
+    /**
+     * Metodo para retornar todos los profesores registrados
+     * @return List
+     */
+    
     public List<Profesor> retornarProfesores() {
         if (this.leer() != null) {
             this.ListaProfesores = this.leer();
@@ -88,6 +93,11 @@ public class ProfesorService {
         }
     }
 
+    /**
+     * Retorna un profesor dependiendo la cedula del mismo
+     * @param cedula parametro para filtrar un profesor 
+     * @return Profesor
+     */
     public Profesor retornarProfesorCedula(String cedula) {
         if (this.leer() != null) {
             boolean bandera = true;
@@ -111,9 +121,9 @@ public class ProfesorService {
     }
 
     /**
-     *
-     * @param id
-     * @return
+     * Metodo para eliminar un profesor registrado
+     * @param id variable para saber que profesor eliminar
+     * @return int
      */
     public int eliminarProfesor(int id) {
         if (this.leer() != null) {
@@ -155,6 +165,11 @@ public class ProfesorService {
 
     }
 
+    /**
+     * Metodo para retornar un profesor dependiendo la materia que dicta
+     * @param materia Variable para saber la materia por la cual se esta filtrando
+     * @return List
+     */
     public List<Profesor> retornarProfesorMateria(String materia) {
         List<Profesor> profesores = new ArrayList();
         if (this.leer() != null) {

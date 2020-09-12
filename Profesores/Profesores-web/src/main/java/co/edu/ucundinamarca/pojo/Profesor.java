@@ -5,6 +5,7 @@
  */
 package co.edu.ucundinamarca.pojo;
 
+import io.swagger.annotations.*;
 import java.io.Serializable;
 import java.util.List;
 import javax.validation.constraints.NotNull;
@@ -14,6 +15,7 @@ import javax.validation.constraints.Size;
  *
  * @author Camilo Vargas
  */
+@ApiModel("Profesor POJO")
 public class Profesor implements Serializable {
 
     /**
@@ -53,6 +55,7 @@ public class Profesor implements Serializable {
      *
      * @return int
      */
+    @ApiModelProperty(value = "Id del profesor", example = "12")
     public int getId() {
         return id;
     }
@@ -71,6 +74,7 @@ public class Profesor implements Serializable {
      *
      * @return String
      */
+    @ApiModelProperty(value = "Nombre del profesor", example = "David")
     public String getNombre() {
         return nombre;
     }
@@ -89,6 +93,7 @@ public class Profesor implements Serializable {
      *
      * @return String
      */
+    @ApiModelProperty(value = "Apellido del profesor", example = "Vargas")
     public String getApellido() {
         return apellido;
     }
@@ -107,6 +112,7 @@ public class Profesor implements Serializable {
      *
      * @return List
      */
+    @ApiModelProperty(value = "Materias que dicta del profesor", example = "['Matematicas','Fisica']")
     public List<String> getListaMateria() {
         return listaMateria;
     }
@@ -125,6 +131,7 @@ public class Profesor implements Serializable {
      *
      * @return String 
      */
+    @ApiModelProperty(value = "Correo del profesor", example = "camilo@gmail.com")
     public String getCorreo() {
         return correo;
     }
@@ -143,6 +150,7 @@ public class Profesor implements Serializable {
      *
      * @return String
      */
+    @ApiModelProperty(value = "Cedula del profesor", example = "1070954624")
     public String getCedula() {
         return cedula;
     }

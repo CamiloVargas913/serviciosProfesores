@@ -1,3 +1,4 @@
+co\edu\ucundinamarca\filter\SwaggerFilter.class
 co\edu\ucundinamarca\controller\ProfesoController.class
 org\netbeans\rest\application\config\ApplicationConfig.class
 co\edu\ucundinamarca\logica\ProfesorService.class

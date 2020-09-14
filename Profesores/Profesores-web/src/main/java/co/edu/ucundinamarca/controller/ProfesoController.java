@@ -27,8 +27,9 @@ import javax.ws.rs.PathParam;
  * @author Camilo Vargas
  */
 @Stateless
-@Api(value = "/profesores", description = "Api para hacer las operaciones de los profesores")
+//@Api(value = "/profesores", description = "Api para hacer las operaciones de los profesores")
 @Path("/profesores")
+@Api(tags = {"Profesores"})
 public class ProfesoController {
 
     /**
@@ -95,7 +96,6 @@ public class ProfesoController {
      * @param id variable para saber el profesor a eliminar
      * @return Response codigo HTTP
      */
-    
     @ApiOperation(produces = "application/json", value = "Elimina un profesor", consumes = "aplication/json",
             httpMethod = "DELETE")
     @ApiResponses(value = {
@@ -128,6 +128,11 @@ public class ProfesoController {
     @Path("/retornarProfesor")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(produces = "application/json", value = "Lista Profesores",httpMethod = "GET")
+    @ApiResponses(value = {
+        @ApiResponse(code = 405, message = "Method Not Allowed"),
+        @ApiResponse(code = 404, message = "Not Found"),
+        @ApiResponse(code = 500, message = "Internal Server Error")})
     public Response listaProfesor() {
         ProfesorService profesor = new ProfesorService();
         List<Profesor> dataProfesor = profesor.retornarProfesores();
@@ -148,6 +153,12 @@ public class ProfesoController {
     @Path("/retornarProfesorCc/{cedula}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(produces = "application/json", value = "Lista Profesor por cedula",httpMethod = "GET")
+    @ApiResponses(value = {
+        @ApiResponse(code = 400, message = "Bad Request"),
+        @ApiResponse(code = 405, message = "Method Not Allowed"),
+        @ApiResponse(code = 404, message = "Not Found"),
+        @ApiResponse(code = 500, message = "Internal Server Error")})
     public Response listaProfesorCc(@PathParam("cedula") String cedula) {
         ProfesorService profesor = new ProfesorService();
         Profesor dataProfesor = profesor.retornarProfesorCedula(cedula);
@@ -168,6 +179,12 @@ public class ProfesoController {
     @Path("/retornarProfesorMateria/{materia}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(produces = "application/json", value = "Lista Profesor por materia",httpMethod = "GET")
+    @ApiResponses(value = {
+        @ApiResponse(code = 400, message = "Bad Request"),
+        @ApiResponse(code = 405, message = "Method Not Allowed"),
+        @ApiResponse(code = 404, message = "Not Found"),
+        @ApiResponse(code = 500, message = "Internal Server Error")})
     public Response listaProfesorMateria(@PathParam("materia") String materia) {
         ProfesorService profesor = new ProfesorService();
         List<Profesor> dataProfesor = profesor.retornarProfesorMateria(materia);

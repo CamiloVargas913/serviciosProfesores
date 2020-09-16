@@ -29,8 +29,9 @@ import javax.ws.rs.PathParam;
  * @author Camilo Vargas
  */
 @Stateless
-@Api(value = "/profesores", description = "Api para hacer las operaciones de los profesores")
+//@Api(value = "/profesores", description = "Api para hacer las operaciones de los profesores")
 @Path("/profesores")
+@Api(tags = {"Profesores"})
 public class ProfesoController {
 
     /**
@@ -115,7 +116,12 @@ public class ProfesoController {
     @Path("/retornarProfesor")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response listaProfesor() throws IOException, FileNotFoundException, ClassNotFoundException {
+    @ApiOperation(produces = "application/json", value = "Lista Profesores",httpMethod = "GET")
+    @ApiResponses(value = {
+        @ApiResponse(code = 405, message = "Method Not Allowed"),
+        @ApiResponse(code = 404, message = "Not Found"),
+        @ApiResponse(code = 500, message = "Internal Server Error")})
+    public Response listaProfesor() {
         ProfesorService profesor = new ProfesorService();
         List<Profesor> dataProfesor = profesor.retornarProfesores();
         if (dataProfesor != null) {
@@ -135,7 +141,13 @@ public class ProfesoController {
     @Path("/retornarProfesorCc/{cedula}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response listaProfesorCc(@PathParam("cedula") String cedula) throws IOException, FileNotFoundException, ClassNotFoundException, Exception {
+    @ApiOperation(produces = "application/json", value = "Lista Profesor por cedula",httpMethod = "GET")
+    @ApiResponses(value = {
+        @ApiResponse(code = 400, message = "Bad Request"),
+        @ApiResponse(code = 405, message = "Method Not Allowed"),
+        @ApiResponse(code = 404, message = "Not Found"),
+        @ApiResponse(code = 500, message = "Internal Server Error")})
+    public Response listaProfesorCc(@PathParam("cedula") String cedula) {
         ProfesorService profesor = new ProfesorService();
         Profesor dataProfesor = profesor.retornarProfesorCedula(cedula);
         return Response.status(Response.Status.OK).entity(dataProfesor).build();
@@ -152,7 +164,13 @@ public class ProfesoController {
     @Path("/retornarProfesorMateria/{materia}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response listaProfesorMateria(@PathParam("materia") String materia) throws IOException, ClassNotFoundException {
+    @ApiOperation(produces = "application/json", value = "Lista Profesor por materia",httpMethod = "GET")
+    @ApiResponses(value = {
+        @ApiResponse(code = 400, message = "Bad Request"),
+        @ApiResponse(code = 405, message = "Method Not Allowed"),
+        @ApiResponse(code = 404, message = "Not Found"),
+        @ApiResponse(code = 500, message = "Internal Server Error")})
+    public Response listaProfesorMateria(@PathParam("materia") String materia) {
         ProfesorService profesor = new ProfesorService();
         List<Profesor> dataProfesor = profesor.retornarProfesorMateria(materia);
         if (dataProfesor != null) {

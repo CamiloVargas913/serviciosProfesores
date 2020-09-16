@@ -30,6 +30,11 @@ public class ApplicationConfig extends Application {
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(co.edu.ucundinamarca.controller.ProfesoController.class);
+        resources.add(co.edu.ucundinamarca.exception.filter.ExceptionFilter.class);
+        resources.add(co.edu.ucundinamarca.exception.filter.FileNotFoundExceptionFilter.class);
+        resources.add(co.edu.ucundinamarca.exception.filter.IOExceptionFilter.class);
+        resources.add(co.edu.ucundinamarca.exception.filter.ObjectNotFoundExceptionFilter.class);
+        resources.add(co.edu.ucundinamarca.exception.filter.WebApplicationExceptionFilter.class);
     }
     
 }

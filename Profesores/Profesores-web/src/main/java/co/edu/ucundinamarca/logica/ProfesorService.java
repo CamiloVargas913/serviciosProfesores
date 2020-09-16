@@ -5,8 +5,10 @@
  */
 package co.edu.ucundinamarca.logica;
 
+import co.edu.ucundinamarca.exception.ObjectNotFoundException;
 import co.edu.ucundinamarca.pojo.Profesor;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -53,7 +55,7 @@ public class ProfesorService {
     public void llenarProfesor() {
         FileOutputStream fos;
         try {
-            fos = new FileOutputStream("E:\\archivo.txt");
+            fos = new FileOutputStream("C:\\Users\\david\\Documents\\VIII Semestre\\archivo.txt");
             ObjectOutputStream db = new ObjectOutputStream(fos);
             db.writeObject(this.ListaProfesores);
             db.flush();
@@ -71,7 +73,7 @@ public class ProfesorService {
     public List<Profesor> leer() {
         FileInputStream fis;
         try {
-            fis = new FileInputStream("E:\\archivo.txt");
+            fis = new FileInputStream("C:\\Users\\david\\Documents\\VIII Semestre\\archivo.txt");
             ObjectInputStream ois = new ObjectInputStream(fis);
             return (List<Profesor>) ois.readObject();
         } catch (IOException | ClassNotFoundException ex) {
@@ -81,51 +83,61 @@ public class ProfesorService {
 
     /**
      * Metodo para retornar todos los profesores registrados
+     *
      * @return List
      */
-    
     public List<Profesor> retornarProfesores() {
         if (this.leer() != null) {
             this.ListaProfesores = this.leer();
             return this.ListaProfesores;
         } else {
-            return null;
+            throw new ObjectNotFoundException("No hay registros");
+
         }
     }
 
     /**
      * Retorna un profesor dependiendo la cedula del mismo
-     * @param cedula parametro para filtrar un profesor 
+     *
+     * @param cedula parametro para filtrar un profesor
      * @return Profesor
      */
-    public Profesor retornarProfesorCedula(String cedula) {
-        if (this.leer() != null) {
-            boolean bandera = true;
-            this.ListaProfesores = this.leer();
-            for (Profesor ListaProfesore : ListaProfesores) {
-                if (ListaProfesore.getCedula().equals(cedula)) {
-                    this.profesor = ListaProfesore;
+    public Profesor retornarProfesorCedula(String cedula) throws IOException, FileNotFoundException, ClassNotFoundException, Exception {
+        if (cedula.length() < 11 && cedula.length() >= 7) {
+            if (this.leer() != null) {
+                System.out.println("entra al if");
+                boolean bandera = true;
+                this.ListaProfesores = this.leer();
+                for (Profesor ListaProfesore : ListaProfesores) {
+                    if (ListaProfesore.getCedula().equals(cedula)) {
+                        this.profesor = ListaProfesore;
+                        return this.profesor;
+                    } else {
+                        bandera = false;
+                        throw new ObjectNotFoundException("Estudiante no encontrado");
+                    }
+                }
+                if (bandera) {
                     return this.profesor;
                 } else {
-                    bandera = false;
+                    return null;
                 }
-            }
-            if (bandera) {
-                return this.profesor;
             } else {
-                return null;
+                throw new ObjectNotFoundException("El fichero no contiene datos");
             }
         } else {
-            return null;
+            throw new Exception("Cedula invalida");
         }
+
     }
 
     /**
      * Metodo para eliminar un profesor registrado
+     *
      * @param id variable para saber que profesor eliminar
      * @return int
      */
-    public int eliminarProfesor(int id) {
+    public void eliminarProfesor(int id) throws IOException, FileNotFoundException, ClassNotFoundException {
         if (this.leer() != null) {
             this.ListaProfesores = this.leer();
             boolean bandera = false;
@@ -138,39 +150,36 @@ public class ProfesorService {
             }
             if (bandera) {
                 this.llenarProfesor();
-                return 1;
             } else {
-                return 2;
+                throw new ObjectNotFoundException("No existe el id");
             }
         } else {
-            return 3;
+            throw new FileNotFoundException("No existe el fichero");
         }
 
     }
 
     /**
      * metodo que edita a un profeso
-     * @param profesor 
-     * @return boolean que valida si la edicion fue correcta 
+     *
+     * @param profesor
+     * @return boolean que valida si la edicion fue correcta
      */
-    public boolean editarProfesor(Profesor profesor) {
-        int validacion = this.eliminarProfesor(profesor.getId());
-        if (validacion == 1) {
-            this.registroProfesor(profesor);
-            this.llenarProfesor();
-            return true;
-        } else {
-            return false;
-        }
+    public void editarProfesor(Profesor profesor) throws IOException, FileNotFoundException, ClassNotFoundException {
+        this.eliminarProfesor(profesor.getId());
+        this.registroProfesor(profesor);
+        this.llenarProfesor();
 
     }
 
     /**
      * Metodo para retornar un profesor dependiendo la materia que dicta
-     * @param materia Variable para saber la materia por la cual se esta filtrando
+     *
+     * @param materia Variable para saber la materia por la cual se esta
+     * filtrando
      * @return List
      */
-    public List<Profesor> retornarProfesorMateria(String materia) {
+    public List<Profesor> retornarProfesorMateria(String materia) throws IOException, FileNotFoundException, ClassNotFoundException {
         List<Profesor> profesores = new ArrayList();
         if (this.leer() != null) {
             this.ListaProfesores = this.leer();
@@ -182,10 +191,10 @@ public class ProfesorService {
                 }
             }
         } else {
-            return null;
+            throw new ObjectNotFoundException("No hay datos en el fichero");
         }
         if (profesores.size() <= 0) {
-            return null;
+            throw new ObjectNotFoundException("No hay registros con esa materia");
         } else {
             return profesores;
         }

@@ -18,12 +18,4 @@
         <servlet-name>javax.ws.rs.core.Application</servlet-name>
         <url-pattern>/rest/*</url-pattern>
     </servlet-mapping>   
-    <filter>
-        <filter-name>SwaggerFilter</filter-name>
-        <filter-class>co.edu.ucundinamarca.filter.SwaggerFilter</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>SwaggerFilter</filter-name>
-        <url-pattern>/rest/*</url-pattern>
-    </filter-mapping>
 </web-app>

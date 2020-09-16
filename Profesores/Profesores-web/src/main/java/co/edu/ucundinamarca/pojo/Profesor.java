@@ -5,6 +5,7 @@
  */
 package co.edu.ucundinamarca.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.*;
 import java.io.Serializable;
 import java.util.List;
@@ -16,6 +17,7 @@ import javax.validation.constraints.Size;
  * @author Camilo Vargas
  */
 @ApiModel("Profesor POJO")
+@JsonIgnoreProperties(ignoreUnknown = false)
 public class Profesor implements Serializable {
 
     /**

@@ -18,6 +18,8 @@ import javax.ws.rs.core.Response;
 import co.edu.ucundinamarca.logica.ProfesorService;
 import co.edu.ucundinamarca.pojo.Profesor;
 import io.swagger.annotations.*;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 import javax.validation.Valid;
 import javax.ws.rs.PathParam;
@@ -49,15 +51,11 @@ public class ProfesoController {
         @ApiResponse(code = 422, message = "Invalid data"),
         @ApiResponse(code = 405, message = "Method Not Allowed"),
         @ApiResponse(code = 500, message = "Internal Server Error")})
-    public Response insertarProfesor(@Valid Profesor profesor) {
-        try {
-            ProfesorService profesoragregar = new ProfesorService();
-            profesoragregar.registroProfesor(profesor);
-            return Response.status(Response.Status.CREATED).entity("Insercion correcta").build();
-        } catch (Exception ex) {
-            System.out.println(ex);
-            return Response.status(Response.Status.BAD_REQUEST).entity("Error al insertar").build();
-        }
+    public Response insertarProfesor(@Valid Profesor profesor) throws IOException, FileNotFoundException, ClassNotFoundException {
+
+        ProfesorService profesoragregar = new ProfesorService();
+        profesoragregar.registroProfesor(profesor);
+        return Response.status(Response.Status.CREATED).entity("Insercion correcta").build();
     }
 
     /**
@@ -78,14 +76,10 @@ public class ProfesoController {
         @ApiResponse(code = 404, message = "Not Found"),
         @ApiResponse(code = 405, message = "Method Not Allowed"),
         @ApiResponse(code = 500, message = "Internal Server Error")})
-    public Response editarProfesor(@Valid Profesor profesor) {
+    public Response editarProfesor(@Valid Profesor profesor) throws IOException, FileNotFoundException, ClassNotFoundException {
         ProfesorService profesoragregar = new ProfesorService();
-        if (profesoragregar.editarProfesor(profesor)) {
-            return Response.status(Response.Status.OK).entity("Modificado correctamente").build();
-        } else {
-            return Response.status(Response.Status.NOT_MODIFIED).entity("Error al modificar").build();
-        }
-
+        profesoragregar.editarProfesor(profesor);
+        return Response.status(Response.Status.OK).entity("Modificado correctamente").build();
     }
 
     /**
@@ -95,7 +89,6 @@ public class ProfesoController {
      * @param id variable para saber el profesor a eliminar
      * @return Response codigo HTTP
      */
-    
     @ApiOperation(produces = "application/json", value = "Elimina un profesor", consumes = "aplication/json",
             httpMethod = "DELETE")
     @ApiResponses(value = {
@@ -107,16 +100,10 @@ public class ProfesoController {
     @Path("/eliminar/{id}")
     @DELETE
     @Produces(MediaType.APPLICATION_JSON)
-    public Response eliminarProfesor(@PathParam("id") int id) {
+    public Response eliminarProfesor(@PathParam("id") int id) throws ClassNotFoundException, IOException {
         ProfesorService profesor = new ProfesorService();
-        int data = profesor.eliminarProfesor(id);
-        if (data == 2) {
-            return Response.status(Response.Status.NOT_FOUND).entity("No existe el id").build();
-        } else if (data == 1) {
-            return Response.status(Response.Status.OK).entity("Eliminado Satisfactoriamente").build();
-        } else {
-            return Response.status(Response.Status.NO_CONTENT).entity("No existe fichero").build();
-        }
+        profesor.eliminarProfesor(id);
+        return Response.status(Response.Status.OK).entity("Eliminado Satisfactoriamente").build();
     }
 
     /**
@@ -128,7 +115,7 @@ public class ProfesoController {
     @Path("/retornarProfesor")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response listaProfesor() {
+    public Response listaProfesor() throws IOException, FileNotFoundException, ClassNotFoundException {
         ProfesorService profesor = new ProfesorService();
         List<Profesor> dataProfesor = profesor.retornarProfesores();
         if (dataProfesor != null) {
@@ -148,14 +135,11 @@ public class ProfesoController {
     @Path("/retornarProfesorCc/{cedula}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response listaProfesorCc(@PathParam("cedula") String cedula) {
+    public Response listaProfesorCc(@PathParam("cedula") String cedula) throws IOException, FileNotFoundException, ClassNotFoundException, Exception {
         ProfesorService profesor = new ProfesorService();
         Profesor dataProfesor = profesor.retornarProfesorCedula(cedula);
-        if (dataProfesor != null) {
-            return Response.status(Response.Status.OK).entity(dataProfesor).build();
-        } else {
-            return Response.status(Response.Status.NO_CONTENT).entity("No hay registros").build();
-        }
+        return Response.status(Response.Status.OK).entity(dataProfesor).build();
+
     }
 
     /**
@@ -168,7 +152,7 @@ public class ProfesoController {
     @Path("/retornarProfesorMateria/{materia}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response listaProfesorMateria(@PathParam("materia") String materia) {
+    public Response listaProfesorMateria(@PathParam("materia") String materia) throws IOException, ClassNotFoundException {
         ProfesorService profesor = new ProfesorService();
         List<Profesor> dataProfesor = profesor.retornarProfesorMateria(materia);
         if (dataProfesor != null) {

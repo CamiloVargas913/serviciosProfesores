@@ -1,5 +1,16 @@
-C:\Users\david\Documents\VIII Semestre\Linea II\serviciosProfesores\Profesores\Profesores-web\src\main\java\co\edu\ucundinamarca\filter\SwaggerFilter.java
+C:\Users\david\Documents\VIII Semestre\Linea II\serviciosProfesores\Profesores\Profesores-web\src\main\java\co\edu\ucundinamarca\exception\filter\FileNotFoundExceptionFilter.java
 C:\Users\david\Documents\VIII Semestre\Linea II\serviciosProfesores\Profesores\Profesores-web\src\main\java\co\edu\ucundinamarca\pojo\Profesor.java
+C:\Users\david\Documents\VIII Semestre\Linea II\serviciosProfesores\Profesores\Profesores-web\src\main\java\co\edu\ucundinamarca\exception\FileNotFoundException.java
 C:\Users\david\Documents\VIII Semestre\Linea II\serviciosProfesores\Profesores\Profesores-web\src\main\java\co\edu\ucundinamarca\logica\ProfesorService.java
+C:\Users\david\Documents\VIII Semestre\Linea II\serviciosProfesores\Profesores\Profesores-web\src\main\java\co\edu\ucundinamarca\exception\filter\ExceptionFilter.java
+C:\Users\david\Documents\VIII Semestre\Linea II\serviciosProfesores\Profesores\Profesores-web\src\main\java\co\edu\ucundinamarca\filter\SwaggerFilter.java
+C:\Users\david\Documents\VIII Semestre\Linea II\serviciosProfesores\Profesores\Profesores-web\src\main\java\co\edu\ucundinamarca\exception\filter\NullPointerExceptionFilter.java
+C:\Users\david\Documents\VIII Semestre\Linea II\serviciosProfesores\Profesores\Profesores-web\src\main\java\co\edu\ucundinamarca\pojo\ErrorWrapper.java
+C:\Users\david\Documents\VIII Semestre\Linea II\serviciosProfesores\Profesores\Profesores-web\src\main\java\co\edu\ucundinamarca\exception\ObjectNotFoundException.java
 C:\Users\david\Documents\VIII Semestre\Linea II\serviciosProfesores\Profesores\Profesores-web\src\main\java\org\netbeans\rest\application\config\ApplicationConfig.java
+C:\Users\david\Documents\VIII Semestre\Linea II\serviciosProfesores\Profesores\Profesores-web\src\main\java\co\edu\ucundinamarca\exception\filter\WebApplicationExceptionFilter.java
+C:\Users\david\Documents\VIII Semestre\Linea II\serviciosProfesores\Profesores\Profesores-web\src\main\java\co\edu\ucundinamarca\exception\filter\ObjectNotFoundExceptionFilter.java
 C:\Users\david\Documents\VIII Semestre\Linea II\serviciosProfesores\Profesores\Profesores-web\src\main\java\co\edu\ucundinamarca\controller\ProfesoController.java
+C:\Users\david\Documents\VIII Semestre\Linea II\serviciosProfesores\Profesores\Profesores-web\src\main\java\co\edu\ucundinamarca\exception\filter\IllegalArgumentExceptionFilter.java
+C:\Users\david\Documents\VIII Semestre\Linea II\serviciosProfesores\Profesores\Profesores-web\src\main\java\co\edu\ucundinamarca\exception\filter\IndexOutOfBoundExceptionFilter.java
+C:\Users\david\Documents\VIII Semestre\Linea II\serviciosProfesores\Profesores\Profesores-web\src\main\java\co\edu\ucundinamarca\exception\filter\IOExceptionFilter.java

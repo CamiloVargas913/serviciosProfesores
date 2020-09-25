@@ -9,11 +9,13 @@ import co.edu.ucundinamarca.pojo.ErrorWrapper;
 import java.io.FileNotFoundException;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
+import javax.ws.rs.ext.Provider;
 
 /**
  *
  * @author david
  */
+@Provider
 public class IndexOutOfBoundExceptionFilter implements ExceptionMapper<IndexOutOfBoundsException>{
     @Override
     public Response toResponse(IndexOutOfBoundsException ex) {        

@@ -1,1 +1,6 @@
+co\edu\ucundinamarca\exception\FileNotFoundException.class
+co\edu\ucundinamarca\service\IProfesorService.class
+co\edu\ucundinamarca\exception\ObjectNotFoundException.class
+co\edu\ucundinamarca\dto\Profesor.class
 co\edu\ucundinamarca\NewSessionBean.class
+co\edu\ucundinamarca\service\impl\ProfesorServiceImpl.class

@@ -3,29 +3,27 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package co.edu.ucundinamarca.logica;
+package co.edu.ucundinamarca.service.impl;
 
+import co.edu.ucundinamarca.dto.Profesor;
 import co.edu.ucundinamarca.exception.ObjectNotFoundException;
-import co.edu.ucundinamarca.pojo.Profesor;
+import co.edu.ucundinamarca.service.IProfesorService;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.ws.rs.core.Response;
+import javax.ejb.Stateless;
 
 /**
  *
- * @author David Márquez
+ * @author PROFESIONAL
  */
-public class ProfesorService {
+@Stateless
+public class ProfesorServiceImpl implements IProfesorService{
 
     /**
      * listado de los profesores de tipo profesor
@@ -41,6 +39,7 @@ public class ProfesorService {
      *
      * @param profesor
      */
+    @Override
     public void registroProfesor(Profesor profesor) {
         if (this.leer() != null) {
             this.ListaProfesores = this.leer();
@@ -52,10 +51,11 @@ public class ProfesorService {
     /**
      * metodo void que registra la lista de profesores en el fichero
      */
+    @Override
     public void llenarProfesor() {
         FileOutputStream fos;
         try {
-            fos = new FileOutputStream("C:\\Users\\david\\Documents\\VIII Semestre\\archivo.txt");
+            fos = new FileOutputStream("E:\\archivo.txt");
             ObjectOutputStream db = new ObjectOutputStream(fos);
             db.writeObject(this.ListaProfesores);
             db.flush();
@@ -70,10 +70,11 @@ public class ProfesorService {
      *
      * @return lista Profesor
      */
+    @Override
     public List<Profesor> leer() {
         FileInputStream fis;
         try {
-            fis = new FileInputStream("C:\\Users\\david\\Documents\\VIII Semestre\\archivo.txt");
+            fis = new FileInputStream("E:\\archivo.txt");
             ObjectInputStream ois = new ObjectInputStream(fis);
             return (List<Profesor>) ois.readObject();
         } catch (IOException | ClassNotFoundException ex) {
@@ -86,13 +87,17 @@ public class ProfesorService {
      *
      * @return List
      */
+    @Override
     public List<Profesor> retornarProfesores() {
         if (this.leer() != null) {
             this.ListaProfesores = this.leer();
-            return this.ListaProfesores;
+            if (this.ListaProfesores.isEmpty()) {
+                throw new ObjectNotFoundException("No hay registros");
+            } else {
+                return this.ListaProfesores;
+            }
         } else {
             throw new ObjectNotFoundException("No hay registros");
-
         }
     }
 
@@ -102,10 +107,10 @@ public class ProfesorService {
      * @param cedula parametro para filtrar un profesor
      * @return Profesor
      */
-    public Profesor retornarProfesorCedula(String cedula) throws IOException, FileNotFoundException, ClassNotFoundException, Exception {
+    @Override
+    public Profesor retornarProfesorCedula(String cedula) throws  ObjectNotFoundException{
         if (cedula.length() < 11 && cedula.length() >= 7) {
             if (this.leer() != null) {
-                System.out.println("entra al if");
                 boolean bandera = true;
                 this.ListaProfesores = this.leer();
                 for (Profesor ListaProfesore : ListaProfesores) {
@@ -118,7 +123,11 @@ public class ProfesorService {
                     }
                 }
                 if (bandera) {
-                    return this.profesor;
+                    if (this.profesor.getId() != 0) {
+                        return this.profesor;
+                    }else{
+                         throw new ObjectNotFoundException("Profesor no encontrado");
+                    }
                 } else {
                     return null;
                 }
@@ -126,7 +135,7 @@ public class ProfesorService {
                 throw new ObjectNotFoundException("El fichero no contiene datos");
             }
         } else {
-            throw new Exception("Cedula invalida");
+            throw new ObjectNotFoundException("Cedula invalida");
         }
 
     }
@@ -137,7 +146,8 @@ public class ProfesorService {
      * @param id variable para saber que profesor eliminar
      * @return int
      */
-    public void eliminarProfesor(int id) throws IOException, FileNotFoundException, ClassNotFoundException {
+    @Override
+    public void eliminarProfesor(int id) throws ObjectNotFoundException{
         if (this.leer() != null) {
             this.ListaProfesores = this.leer();
             boolean bandera = false;
@@ -154,7 +164,7 @@ public class ProfesorService {
                 throw new ObjectNotFoundException("No existe el id");
             }
         } else {
-            throw new FileNotFoundException("No existe el fichero");
+            throw new ObjectNotFoundException("No existe el fichero");
         }
 
     }
@@ -165,6 +175,7 @@ public class ProfesorService {
      * @param profesor
      * @return boolean que valida si la edicion fue correcta
      */
+    @Override
     public void editarProfesor(Profesor profesor) throws IOException, FileNotFoundException, ClassNotFoundException {
         this.eliminarProfesor(profesor.getId());
         this.registroProfesor(profesor);
@@ -179,6 +190,7 @@ public class ProfesorService {
      * filtrando
      * @return List
      */
+    @Override
     public List<Profesor> retornarProfesorMateria(String materia) throws IOException, FileNotFoundException, ClassNotFoundException {
         List<Profesor> profesores = new ArrayList();
         if (this.leer() != null) {
@@ -199,4 +211,6 @@ public class ProfesorService {
             return profesores;
         }
     }
+
+    
 }

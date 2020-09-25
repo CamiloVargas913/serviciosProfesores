@@ -5,27 +5,33 @@
  */
 package co.edu.ucundinamarca.swagger;
 
-import org.glassfish.jersey.server.ResourceConfig;
-
-import org.glassfish.jersey.server.ServerProperties;
-import org.glassfish.jersey.server.filter.RolesAllowedDynamicFeature;
-import io.swagger.jaxrs.config.BeanConfig;
-import javax.ws.rs.ApplicationPath;
-import javax.ws.rs.core.Application;
+import com.wordnik.swagger.config.ConfigFactory;
+import com.wordnik.swagger.config.ScannerFactory;
+import com.wordnik.swagger.config.SwaggerConfig;
+import com.wordnik.swagger.jaxrs.config.DefaultJaxrsScanner;
+import com.wordnik.swagger.jaxrs.reader.DefaultJaxrsApiReader;
+import com.wordnik.swagger.reader.ClassReaders;
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
 
 /**
  *
  * @author PROFESIONAL
  */
-//@ApplicationPath("api")
-public class swagger extends Application {
+@WebServlet(name = "SwaggerJaxrsConfig", loadOnStartup = 1)
+public class swagger extends HttpServlet{
 
-    public swagger() {
-        BeanConfig beanConfig = new BeanConfig();
-        beanConfig.setTitle("Swagger API Title");
-        beanConfig.setVersion("1.0.0");
-        beanConfig.setBasePath("Profesores/api");
-        beanConfig.setResourcePackage("co.edu.ucundinamarca.controller");
-        beanConfig.setScan(true);
+   @Override
+    public void init(ServletConfig servletConfig) throws ServletException {
+        super.init(servletConfig);
+        SwaggerConfig swaggerConfig = new SwaggerConfig();
+        ConfigFactory.setConfig(swaggerConfig);
+        swaggerConfig.setBasePath("http://localhost:8080/Profesores-web/rest");
+        swaggerConfig.setApiVersion("1.0.0");
+        ScannerFactory.setScanner(new DefaultJaxrsScanner());
+        ClassReaders.setReader(new DefaultJaxrsApiReader());
     }
+
 }

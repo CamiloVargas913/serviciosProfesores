@@ -6,8 +6,10 @@
 package co.edu.ucundinamarca.service;
 
 import co.edu.ucundinamarca.dto.Profesor;
+import co.edu.ucundinamarca.dto.ProfesorBD;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 import javax.ejb.Local;
 import javax.ejb.ObjectNotFoundException;
@@ -18,12 +20,13 @@ import javax.ejb.ObjectNotFoundException;
  */
 @Local
 public interface IProfesorService {
+    public void insertarProfesor(ProfesorBD profesorInsertar) throws Exception;
+    public void traerCedula(int cedula);
+    public void traerUltimoID() throws SQLException;
+    public void listaMateriasProfesor() throws SQLException;
 
-    /**
-     * metodo que recibe un objeto profesor y lo agrega a la lista de profesores
-     *
-     * @param profesor
-     */
+    public void listarProfesor();
+    
     public void registroProfesor(Profesor profesor);
 
     public void llenarProfesor();
@@ -38,5 +41,7 @@ public interface IProfesorService {
 
     public void editarProfesor(Profesor profesor) throws IOException, FileNotFoundException, ClassNotFoundException;
 
+    public List<ProfesorBD> getListaProfesor();
+    
     public List<Profesor> retornarProfesorMateria(String materia) throws IOException, FileNotFoundException, ClassNotFoundException;
 }

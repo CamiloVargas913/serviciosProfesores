@@ -1,6 +1,12 @@
-co\edu\ucundinamarca\exception\FileNotFoundException.class
+co\edu\ucundinamarca\dto\Materia.class
+co\edu\ucundinamarca\exception\NoValidoException.class
 co\edu\ucundinamarca\service\IProfesorService.class
 co\edu\ucundinamarca\exception\ObjectNotFoundException.class
 co\edu\ucundinamarca\dto\Profesor.class
+co\edu\ucundinamarca\exception\ListaVaciaException.class
+co\edu\ucundinamarca\exception\FileNotFoundException.class
+co\edu\ucundinamarca\dto\ConexionBD.class
+co\edu\ucundinamarca\dto\ProfesorBD.class
+co\edu\ucundinamarca\service\impl\DatosImpl.class
 co\edu\ucundinamarca\NewSessionBean.class
 co\edu\ucundinamarca\service\impl\ProfesorServiceImpl.class

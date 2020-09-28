@@ -17,7 +17,8 @@ import javax.ws.rs.ext.Provider;
 @Provider
 public class ExceptionFilter implements ExceptionMapper<Exception> {
     @Override
-    public Response toResponse(Exception ex) {        
+    public Response toResponse(Exception ex) {     
+        
         ErrorWrapper error = new ErrorWrapper(ex.getMessage(), "500", "INTERNAL_SERVER_ERROR");
         return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(error).build();
     }

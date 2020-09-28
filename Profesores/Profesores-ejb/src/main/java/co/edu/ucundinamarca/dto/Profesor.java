@@ -44,7 +44,6 @@ public class Profesor implements Serializable {
      * cedula del profesor
      */
     @NotNull(message = "Campo requerido")
-    @Size(max = 25)
     private String cedula;
 
     /**

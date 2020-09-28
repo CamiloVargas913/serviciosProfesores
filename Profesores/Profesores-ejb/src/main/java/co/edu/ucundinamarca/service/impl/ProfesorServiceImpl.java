@@ -5,7 +5,11 @@
  */
 package co.edu.ucundinamarca.service.impl;
 
+import co.edu.ucundinamarca.dto.Materia;
 import co.edu.ucundinamarca.dto.Profesor;
+import co.edu.ucundinamarca.dto.ProfesorBD;
+import co.edu.ucundinamarca.exception.ListaVaciaException;
+import co.edu.ucundinamarca.exception.NoValidoException;
 import co.edu.ucundinamarca.exception.ObjectNotFoundException;
 import co.edu.ucundinamarca.service.IProfesorService;
 import java.io.FileInputStream;
@@ -14,6 +18,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -23,8 +29,14 @@ import javax.ejb.Stateless;
  * @author PROFESIONAL
  */
 @Stateless
-public class ProfesorServiceImpl implements IProfesorService{
+public class ProfesorServiceImpl extends DatosImpl implements IProfesorService {
 
+    /**
+     * Lista de materias
+     */
+    private List<Materia> listaMaterias;
+
+    private List<Profesor> listaProfesores;
     /**
      * listado de los profesores de tipo profesor
      */
@@ -33,6 +45,12 @@ public class ProfesorServiceImpl implements IProfesorService{
      * variable profesor de tipo profesor
      */
     Profesor profesor = new Profesor();
+    private int idProfesor;
+    /**
+     * boolean estado del retorno de la consulta sql
+     */
+    private boolean estado = true;
+    private List<ProfesorBD> listaProfesor;
 
     /**
      * metodo que recibe un objeto profesor y lo agrega a la lista de profesores
@@ -49,13 +67,63 @@ public class ProfesorServiceImpl implements IProfesorService{
     }
 
     /**
+     * Metodo que retorna la lista de las materias de acuerdo al profesor
+     *
+     * @throws SQLException
+     */
+    @Override
+    public void listaMateriasProfesor() throws SQLException {
+
+        listaMaterias = new ArrayList<>();
+        java.sql.Statement st = conexion.createStatement();
+        try {
+            String sql2 = "SELECT materia.id_materia,materia.nombre_materia,materia.cupos_materia,materia.creditos_materia FROM materia,profesor_materia where materia.id_materia=profesor_materia.id_materia and profesor_materia.id_profesor=" + this.idProfesor + ";";
+            ResultSet result2 = st.executeQuery(sql2);
+            while (result2.next()) {
+                int idMateria = Integer.parseInt(result2.getString("id_materia"));
+                int cuposMateria = Integer.parseInt(result2.getString("cupos_materia"));
+                int creditosMateria = Integer.parseInt(result2.getString("creditos_materia"));
+                listaMaterias.add(new Materia(idMateria, result2.getString("nombre_materia"), cuposMateria, creditosMateria));
+            }
+        } catch (SQLException | NumberFormatException e) {
+
+        }
+    }
+
+    /**
+     * Metodo que retorna la lista de todos los profesores registrados
+     */
+    @Override
+    public void listarProfesor() {
+        try {
+            listaProfesor = new ArrayList<>();
+            java.sql.Statement st = conexion.createStatement();
+            String sql = "SELECT cedula_profesor, nombre_profesor, apellido_profesor, correo_profesor, edad_correo, id_profesor FROM public.profesor;";
+            ResultSet result = st.executeQuery(sql);
+            if (result.next() == false) {
+                throw new ListaVaciaException("No hay datos registrados");
+            } else {
+                do {
+                    this.idProfesor = Integer.parseInt(result.getString("id_profesor"));
+                    int edad = Integer.parseInt(result.getString("edad_correo"));
+                    int cedula = Integer.parseInt(result.getString("cedula_profesor"));
+                    listaMateriasProfesor();
+                    listaProfesor.add(new ProfesorBD(this.idProfesor, edad, cedula, result.getString("nombre_profesor"), result.getString("apellido_profesor"), result.getString("correo_profesor"), this.getListaMaterias()));
+                } while (result.next());
+            }
+        } catch (SQLException ex) {
+
+        }
+    }
+
+    /**
      * metodo void que registra la lista de profesores en el fichero
      */
     @Override
     public void llenarProfesor() {
         FileOutputStream fos;
         try {
-            fos = new FileOutputStream("E:\\archivo.txt");
+            fos = new FileOutputStream("C:\\Users\\david\\Documents\\VIII Semestre\\archivo.txt");
             ObjectOutputStream db = new ObjectOutputStream(fos);
             db.writeObject(this.ListaProfesores);
             db.flush();
@@ -74,7 +142,7 @@ public class ProfesorServiceImpl implements IProfesorService{
     public List<Profesor> leer() {
         FileInputStream fis;
         try {
-            fis = new FileInputStream("E:\\archivo.txt");
+            fis = new FileInputStream("C:\\Users\\david\\Documents\\VIII Semestre\\archivo.txt");
             ObjectInputStream ois = new ObjectInputStream(fis);
             return (List<Profesor>) ois.readObject();
         } catch (IOException | ClassNotFoundException ex) {
@@ -108,34 +176,31 @@ public class ProfesorServiceImpl implements IProfesorService{
      * @return Profesor
      */
     @Override
-    public Profesor retornarProfesorCedula(String cedula) throws  ObjectNotFoundException{
-        if (cedula.length() < 11 && cedula.length() >= 7) {
-            if (this.leer() != null) {
-                boolean bandera = true;
-                this.ListaProfesores = this.leer();
-                for (Profesor ListaProfesore : ListaProfesores) {
-                    if (ListaProfesore.getCedula().equals(cedula)) {
-                        this.profesor = ListaProfesore;
-                        return this.profesor;
-                    } else {
-                        bandera = false;
-                        throw new ObjectNotFoundException("Estudiante no encontrado");
-                    }
-                }
-                if (bandera) {
-                    if (this.profesor.getId() != 0) {
-                        return this.profesor;
-                    }else{
-                         throw new ObjectNotFoundException("Profesor no encontrado");
-                    }
+    public Profesor retornarProfesorCedula(String cedula) throws ObjectNotFoundException {
+        System.out.println("logica" + cedula);
+        if (this.leer() != null) {
+            boolean bandera = true;
+            this.ListaProfesores = this.leer();
+            for (Profesor ListaProfesore : ListaProfesores) {
+                if (ListaProfesore.getCedula().equals(cedula)) {
+                    this.profesor = ListaProfesore;
+                    return this.profesor;
                 } else {
-                    return null;
+                    bandera = false;
+                    throw new ObjectNotFoundException("Estudiante no encontrado");
+                }
+            }
+            if (bandera) {
+                if (this.profesor.getId() != 0) {
+                    return this.profesor;
+                } else {
+                    throw new ObjectNotFoundException("Profesor no encontrado");
                 }
             } else {
-                throw new ObjectNotFoundException("El fichero no contiene datos");
+                return null;
             }
         } else {
-            throw new ObjectNotFoundException("Cedula invalida");
+            throw new ObjectNotFoundException("El fichero no contiene datos");
         }
 
     }
@@ -147,7 +212,7 @@ public class ProfesorServiceImpl implements IProfesorService{
      * @return int
      */
     @Override
-    public void eliminarProfesor(int id) throws ObjectNotFoundException{
+    public void eliminarProfesor(int id) throws ObjectNotFoundException {
         if (this.leer() != null) {
             this.ListaProfesores = this.leer();
             boolean bandera = false;
@@ -212,5 +277,117 @@ public class ProfesorServiceImpl implements IProfesorService{
         }
     }
 
-    
+    @Override
+    public void insertarProfesor(ProfesorBD profesorInsertar) throws Exception {
+
+//        if (profesorInsertar.getNombre() == null || profesorInsertar.getEdad() == null || profesorInsertar.getCorreo() == null
+//                || profesorInsertar.getApellido() == null || profesorInsertar.getCedula() == null) {
+//            throw new IdVacioException("Uno de los atributos del JSON esta vacio");
+//        } else {
+        traerCedula(Integer.parseInt(profesorInsertar.getCedula().toString()));
+        if (estado == false) {
+            String cadenaSql = " INSERT INTO public.profesor(cedula_profesor, nombre_profesor, apellido_profesor, correo_profesor, edad_correo)"
+                    + "VALUES (" + Integer.parseInt(profesorInsertar.getCedula().toString()) + ",'"
+                    + profesorInsertar.getNombre() + "','" + profesorInsertar.getApellido() + "','" + profesorInsertar.getCorreo() + "'," + Integer.parseInt(profesorInsertar.getEdad().toString()) + ");";
+            modifacionBaseDatos(cadenaSql);
+            traerUltimoID();
+            insertarTablaAsociativa(profesorInsertar.getListaMateria(), this.idProfesor);
+        } else {
+            throw new NoValidoException("La cedula ya se encuentra registrada");
+        }
+//        }
+
+    }
+
+    @Override
+    public void traerUltimoID() throws SQLException {
+        java.sql.Statement st = conexion.createStatement();
+        String sql = "SELECT MAX(id_profesor) as id_profesor FROM public.profesor;";
+        ResultSet result = st.executeQuery(sql);
+        while (result.next()) {
+            this.idProfesor = Integer.parseInt(result.getString("id_profesor"));
+        }
+        System.out.println(this.idProfesor);
+    }
+
+    @Override
+    public void traerCedula(int cedula) {
+        try {
+            listaProfesores = new ArrayList<>();
+            java.sql.Statement st = conexion.createStatement();
+            String sql = "SELECT id_profesor, cedula_profesor, nombre_profesor, apellido_profesor, correo_profesor, edad_correo FROM public.profesor where cedula_profesor=" + cedula + ";";
+            ResultSet result = st.executeQuery(sql);
+            if (result.next() == false) {
+                this.estado = false;
+            } else {
+                do {
+                    this.idProfesor = Integer.parseInt(result.getString("id_profesor"));
+                    int edad = Integer.parseInt(result.getString("edad_correo"));
+                    int numeroCedula = Integer.parseInt(result.getString("cedula_profesor"));
+                    listaMateriasProfesor();
+                    listaProfesor.add(new ProfesorBD(this.idProfesor, edad, numeroCedula, result.getString("nombre_profesor"), result.getString("apellido_profesor"), result.getString("correo_profesor"), this.getListaMaterias()));
+                } while (result.next());
+            }
+        } catch (SQLException ex) {
+
+        }
+    }
+
+    public void insertarTablaAsociativa(List<Materia> listaMateria, int idProfesor) {
+        for (Materia materia : listaMateria) {
+            String cadenaSql = " INSERT INTO public.profesor_materia(id_profesor, id_materia)"
+                    + "VALUES (" + idProfesor + "," + Integer.parseInt(materia.getId().toString()) + ");";
+            modifacionBaseDatos(cadenaSql);
+        }
+    }
+
+    public List<Materia> getListaMaterias() {
+        return listaMaterias;
+    }
+
+    public void setListaMaterias(List<Materia> listaMaterias) {
+        this.listaMaterias = listaMaterias;
+    }
+
+    @Override
+    public List<ProfesorBD> getListaProfesor() {
+        return listaProfesor;
+    }
+
+    public void setListaProfesor(List<ProfesorBD> listaProfesor) {
+        this.listaProfesor = listaProfesor;
+    }
+
+    public List<Profesor> getListaProfesores() {
+        return listaProfesores;
+    }
+
+    public void setListaProfesores(List<Profesor> listaProfesores) {
+        this.listaProfesores = listaProfesores;
+    }
+
+    public Profesor getProfesor() {
+        return profesor;
+    }
+
+    public void setProfesor(Profesor profesor) {
+        this.profesor = profesor;
+    }
+
+    public int getIdProfesor() {
+        return idProfesor;
+    }
+
+    public void setIdProfesor(int idProfesor) {
+        this.idProfesor = idProfesor;
+    }
+
+    public boolean isEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
+    }
+
 }

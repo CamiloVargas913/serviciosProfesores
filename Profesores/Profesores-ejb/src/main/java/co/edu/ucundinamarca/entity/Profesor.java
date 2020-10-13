@@ -11,6 +11,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -21,6 +23,13 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "profesor")
+@NamedQueries({
+    @NamedQuery(name = "Profesor.listarTodo", query = "SELECT p FROM Profesor p"),
+    @NamedQuery(name = "Profesor.validarCedula", query = "SELECT COUNT(p.cedula)  FROM Profesor p WHERE p.cedula = :cedula AND p.id <> :id"),
+    @NamedQuery(name = "Profesor.validarCorreo", query = "SELECT COUNT(p.correo)  FROM Profesor p WHERE p.correo = :correo AND p.id <> :id"),
+    @NamedQuery(name = "Profesor.validarCedulaInsert", query = "SELECT COUNT(p.cedula)  FROM Profesor p WHERE p.cedula = :cedula"),
+    @NamedQuery(name = "Profesor.validarCorreoInsert", query = "SELECT COUNT(p.correo)  FROM Profesor p WHERE p.correo = :correo")
+})
 public class Profesor implements Serializable {
 
     /**
@@ -28,7 +37,7 @@ public class Profesor implements Serializable {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
     /**
      * nombre del profesor
      */
@@ -57,9 +66,9 @@ public class Profesor implements Serializable {
 
     @Column(name = "edad_profesor")
     @NotNull(message = "Edad requerida")
-    private int edad;
+    private Integer edad;
 
-    public Profesor(int id, String nombre, String apellido, String correo, String cedula, int edad) {
+    public Profesor(Integer id, String nombre, String apellido, String correo, String cedula, Integer edad) {
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -71,11 +80,11 @@ public class Profesor implements Serializable {
     public Profesor() {
     }
 
-    public int getEdad() {
+    public Integer getEdad() {
         return edad;
     }
 
-    public void setEdad(int edad) {
+    public void setEdad(Integer edad) {
         this.edad = edad;
     }
 
@@ -84,7 +93,7 @@ public class Profesor implements Serializable {
      *
      * @return int
      */
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -93,7 +102,7 @@ public class Profesor implements Serializable {
      *
      * @param id variable para guardar el id del profesor
      */
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

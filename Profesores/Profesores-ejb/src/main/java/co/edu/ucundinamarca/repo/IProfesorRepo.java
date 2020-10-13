@@ -17,7 +17,14 @@ import javax.ejb.Local;
 public interface IProfesorRepo {
     public List<Profesor> listar();
     public void insertar(Profesor profesor);
-    public Profesor listarID(int id);
+    public Profesor listarID(Integer id);
     public void modificar(Profesor profesor);
     public void eliminar(Profesor profesor);
+    public Integer validarCedula(String cedula, Integer id);
+    
+    public Integer validarCorreo(String correo, Integer id);
+    
+    public Integer validarCedulaInsert(String cedula);
+    
+    public Integer validarCorreoInsert(String correo);
 }

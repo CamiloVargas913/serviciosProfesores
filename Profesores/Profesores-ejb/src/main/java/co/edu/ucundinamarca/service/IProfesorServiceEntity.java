@@ -6,6 +6,9 @@
 package co.edu.ucundinamarca.service;
 
 import co.edu.ucundinamarca.entity.Profesor;
+import co.edu.ucundinamarca.exception.ObjectNotFoundException;
+import co.edu.ucundinamarca.exception.ParamRequiredException;
+import co.edu.ucundinamarca.exception.ParamUsedException;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -16,8 +19,8 @@ import javax.ejb.Local;
 @Local
 public interface IProfesorServiceEntity {
     public List<Profesor> listar();
-    public void insertar(Profesor profesor);
-    public Profesor listarID(int id);
-    public void modificar(Profesor profesor);
-    public void eliminar(Profesor profesor);
+    public void insertar(Profesor profesor) throws ParamUsedException;
+    public Profesor listarID(Integer id) throws ObjectNotFoundException;
+    public void modificar(Profesor profesor) throws ParamRequiredException, ObjectNotFoundException, ParamUsedException;
+    public void eliminar(Integer id) throws ObjectNotFoundException;
 }

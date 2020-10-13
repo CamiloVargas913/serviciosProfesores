@@ -7,6 +7,8 @@ package co.edu.ucundinamarca.controller;
 
 import co.edu.ucundinamarca.entity.Profesor;
 import co.edu.ucundinamarca.exception.ObjectNotFoundException;
+import co.edu.ucundinamarca.exception.ParamRequiredException;
+import co.edu.ucundinamarca.exception.ParamUsedException;
 import co.edu.ucundinamarca.service.IProfesorServiceEntity;
 import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiResponse;
@@ -19,6 +21,7 @@ import javax.ejb.Stateless;
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -75,7 +78,7 @@ public class ProfesoEntityController {
         @ApiResponse(code = 422, message = "Invalid data"),
         @ApiResponse(code = 405, message = "Method Not Allowed"),
         @ApiResponse(code = 500, message = "Internal Server Error")})
-    public Response listarId(@PathParam("id") @Min(1) int id) {
+    public Response listarId(@PathParam("id") @Min(1) Integer id) throws ObjectNotFoundException{
         Profesor dataProfesor = this.service.listarID(id);
         return Response.status(Response.Status.OK).entity(dataProfesor).build();
     }
@@ -109,13 +112,13 @@ public class ProfesoEntityController {
         @ApiResponse(code = 422, message = "Invalid data"),
         @ApiResponse(code = 405, message = "Method Not Allowed"),
         @ApiResponse(code = 500, message = "Internal Server Error")})
-    public Response editar(@Valid Profesor profesor) {
+    public Response editar(@Valid Profesor profesor) throws ParamUsedException, ParamRequiredException, ObjectNotFoundException{
         this.service.modificar(profesor);
         return Response.status(Response.Status.OK).entity("Modificado correctamente").build();
     }
     
-    @Path("/eliminar")
-    @PUT
+    @Path("/eliminar/{id}")
+    @DELETE
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @ApiOperation(produces = "application/json", value = "Insertar un profesor", consumes = "aplication/json",
@@ -126,8 +129,8 @@ public class ProfesoEntityController {
         @ApiResponse(code = 422, message = "Invalid data"),
         @ApiResponse(code = 405, message = "Method Not Allowed"),
         @ApiResponse(code = 500, message = "Internal Server Error")})
-    public Response eliminar(@Valid Profesor profesor) {
-        this.service.eliminar(profesor);
-        return Response.status(Response.Status.OK).entity("Eliminado correctamente").build();
+    public Response eliminar(@PathParam("id" ) Integer id) throws ObjectNotFoundException{
+        this.service.eliminar(id);
+        return Response.status(Response.Status.NO_CONTENT).entity("Eliminado correctamente").build();
     }
 }

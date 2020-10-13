@@ -11,6 +11,8 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -24,8 +26,8 @@ public class ProfesorRepo implements IProfesorRepo {
 
     @Override
     public List<Profesor> listar() {
-        List listprofesor = this.entity.createQuery("SELECT c FROM Profesor c").getResultList();
-        return listprofesor;
+        TypedQuery<Profesor> listaProfesor = this.entity.createNamedQuery("Profesor.listarTodo", Profesor.class); 
+        return listaProfesor.getResultList();
     }
 
     @Override
@@ -34,7 +36,7 @@ public class ProfesorRepo implements IProfesorRepo {
     }
 
     @Override
-    public Profesor listarID(int id) {
+    public Profesor listarID(Integer id) {
         return this.entity.find(Profesor.class, id);
     }
     @Override
@@ -44,6 +46,36 @@ public class ProfesorRepo implements IProfesorRepo {
      @Override
     public void eliminar(Profesor profesor){
         this.entity.remove(profesor);
+    }
+    
+    @Override
+    public Integer validarCedula(String cedula, Integer id) {
+        Query query = this.entity.createNamedQuery("Profesor.validarCedula");
+        query.setParameter("cedula", cedula);
+        query.setParameter("id", id);
+        return (Integer) query.getSingleResult();
+    }
+
+    @Override
+    public Integer validarCorreo(String correo, Integer id) {
+        Query query = this.entity.createNamedQuery("Profesor.validarCorreo");
+        query.setParameter("correo", correo);
+        query.setParameter("id", id);
+        return (Integer) query.getSingleResult();
+    }
+
+    @Override
+    public Integer validarCedulaInsert(String cedula) {
+        Query query = this.entity.createNamedQuery("Profesor.validarCedulaInsert");
+        query.setParameter("cedula", cedula);
+        return (Integer) query.getSingleResult();
+    }
+
+    @Override
+    public Integer validarCorreoInsert(String correo) {
+        Query query = this.entity.createNamedQuery("Profesor.validarCorreoInsert");
+        query.setParameter("correo", correo);
+        return (Integer) query.getSingleResult();
     }
 
 }

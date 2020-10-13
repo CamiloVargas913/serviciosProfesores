@@ -11,7 +11,9 @@ co\edu\ucundinamarca\exception\ListaVaciaException.class
 co\edu\ucundinamarca\exception\FileNotFoundException.class
 co\edu\ucundinamarca\repo\impl\ProfesorRepo.class
 co\edu\ucundinamarca\dto\ConexionBD.class
+co\edu\ucundinamarca\exception\ParamUsedException.class
 co\edu\ucundinamarca\repo\IProfesorRepo.class
+co\edu\ucundinamarca\exception\ParamRequiredException.class
 co\edu\ucundinamarca\dto\ProfesorBD.class
 co\edu\ucundinamarca\service\impl\DatosImpl.class
 co\edu\ucundinamarca\NewSessionBean.class

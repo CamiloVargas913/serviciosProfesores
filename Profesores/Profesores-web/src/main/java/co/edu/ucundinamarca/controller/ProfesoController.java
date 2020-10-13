@@ -7,6 +7,7 @@ package co.edu.ucundinamarca.controller;
 
 import co.edu.ucundinamarca.dto.Profesor;
 import co.edu.ucundinamarca.dto.ProfesorBD;
+import co.edu.ucundinamarca.exception.ObjectNotFoundException;
 import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -28,7 +29,6 @@ import java.sql.SQLException;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
-import javax.ejb.ObjectNotFoundException;
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -66,7 +66,7 @@ public class ProfesoController {
         @ApiResponse(code = 422, message = "Invalid data"),
         @ApiResponse(code = 405, message = "Method Not Allowed"),
         @ApiResponse(code = 500, message = "Internal Server Error")})
-    public Response insertarProfesor(@Valid Profesor profesor) throws IOException, FileNotFoundException, ClassNotFoundException {
+    public Response insertarProfesor(@Valid Profesor profesor) throws IOException, FileNotFoundException, ClassNotFoundException, ObjectNotFoundException {
         service.registroProfesor(profesor);
         return Response.status(Response.Status.CREATED).entity("Insercion correcta").build();
     }
@@ -97,7 +97,7 @@ public class ProfesoController {
         @ApiResponse(code = 200, message = "OK"),
         @ApiResponse(code = 400, message = "Bad Request"),
         @ApiResponse(code = 500, message = "Internal Server Error")})
-    public Response retornarProfesor() throws SQLException {
+    public Response retornarProfesor() throws SQLException, ObjectNotFoundException {
         service.listarProfesor();
         return Response.status(Response.Status.OK).entity(service.getListaProfesor()).build();
     }
@@ -112,7 +112,7 @@ public class ProfesoController {
      * @throws java.io.FileNotFoundException
      */
     @Path("/editar")
-    @PUT
+    @DELETE
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @ApiOperation(produces = "application/json", value = "Edita un profesor", consumes = "aplication/json",
@@ -124,7 +124,7 @@ public class ProfesoController {
         @ApiResponse(code = 404, message = "Not Found"),
         @ApiResponse(code = 405, message = "Method Not Allowed"),
         @ApiResponse(code = 500, message = "Internal Server Error")})
-    public Response editarProfesor(@Valid Profesor profesor) throws EJBException, IOException, FileNotFoundException, ClassNotFoundException {
+    public Response editarProfesor(@Valid Profesor profesor) throws EJBException, IOException, FileNotFoundException, ClassNotFoundException, ObjectNotFoundException {
         service.editarProfesor(profesor);
         return Response.status(Response.Status.OK).entity("Modificado correctamente").build();
     }
@@ -148,7 +148,7 @@ public class ProfesoController {
     @Path("/eliminar/{id}")
     @DELETE
     @Produces(MediaType.APPLICATION_JSON)
-    public Response eliminarProfesor(@PathParam("id") @Min(1) int id) throws FileNotFoundException {
+    public Response eliminarProfesor(@PathParam("id") @Min(1) int id) throws FileNotFoundException, ObjectNotFoundException {
         service.eliminarProfesor(id);
         return Response.status(Response.Status.OK).entity("Eliminado Satisfactoriamente").build();
     }
@@ -158,6 +158,7 @@ public class ProfesoController {
      * registrados
      *
      * @return Response codigo HTTP
+     * @throws javax.ejb.ObjectNotFoundException
      */
     @Path("/retornar")
     @GET
@@ -167,7 +168,7 @@ public class ProfesoController {
         @ApiResponse(code = 405, message = "Method Not Allowed"),
         @ApiResponse(code = 404, message = "Not Found"),
         @ApiResponse(code = 500, message = "Internal Server Error")})
-    public Response listaProfesor() throws EJBException {
+    public Response listaProfesor() throws EJBException, ObjectNotFoundException {
         List<Profesor> dataProfesor = service.retornarProfesores();
         return Response.status(Response.Status.OK).entity(dataProfesor).build();
     }
@@ -211,7 +212,7 @@ public class ProfesoController {
         @ApiResponse(code = 405, message = "Method Not Allowed"),
         @ApiResponse(code = 404, message = "Not Found"),
         @ApiResponse(code = 500, message = "Internal Server Error")})
-    public Response listaProfesorMateria(@PathParam("materia") @Size(min = 5, max = 20, message = "El nombre de la materia deber tener minimo 5 caracteres y maximo 20") String materia) throws IOException, FileNotFoundException, ClassNotFoundException {
+    public Response listaProfesorMateria(@PathParam("materia") @Size(min = 5, max = 20, message = "El nombre de la materia deber tener minimo 5 caracteres y maximo 20") String materia) throws IOException, FileNotFoundException, ClassNotFoundException, ObjectNotFoundException {
         List<Profesor> dataProfesor = service.retornarProfesorMateria(materia);
         return Response.status(Response.Status.OK).entity(dataProfesor).build();
     }

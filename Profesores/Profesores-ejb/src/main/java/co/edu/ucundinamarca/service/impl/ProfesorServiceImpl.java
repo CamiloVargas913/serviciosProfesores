@@ -9,7 +9,6 @@ import co.edu.ucundinamarca.dto.Materia;
 import co.edu.ucundinamarca.dto.Profesor;
 import co.edu.ucundinamarca.dto.ProfesorBD;
 import co.edu.ucundinamarca.exception.ListaVaciaException;
-import co.edu.ucundinamarca.exception.NoValidoException;
 import co.edu.ucundinamarca.exception.ObjectNotFoundException;
 import co.edu.ucundinamarca.service.IProfesorService;
 import java.io.FileInputStream;
@@ -123,7 +122,7 @@ public class ProfesorServiceImpl extends DatosImpl implements IProfesorService {
     public void llenarProfesor() {
         FileOutputStream fos;
         try {
-            fos = new FileOutputStream("C:\\Users\\david\\Documents\\VIII Semestre\\archivo.txt");
+            fos = new FileOutputStream("E:\\archivo.txt");
             ObjectOutputStream db = new ObjectOutputStream(fos);
             db.writeObject(this.ListaProfesores);
             db.flush();
@@ -142,7 +141,7 @@ public class ProfesorServiceImpl extends DatosImpl implements IProfesorService {
     public List<Profesor> leer() {
         FileInputStream fis;
         try {
-            fis = new FileInputStream("C:\\Users\\david\\Documents\\VIII Semestre\\archivo.txt");
+            fis = new FileInputStream("E:\\archivo.txt");
             ObjectInputStream ois = new ObjectInputStream(fis);
             return (List<Profesor>) ois.readObject();
         } catch (IOException | ClassNotFoundException ex) {
@@ -156,7 +155,7 @@ public class ProfesorServiceImpl extends DatosImpl implements IProfesorService {
      * @return List
      */
     @Override
-    public List<Profesor> retornarProfesores() {
+    public List<Profesor> retornarProfesores() throws ObjectNotFoundException {
         if (this.leer() != null) {
             this.ListaProfesores = this.leer();
             if (this.ListaProfesores.isEmpty()) {
@@ -174,6 +173,7 @@ public class ProfesorServiceImpl extends DatosImpl implements IProfesorService {
      *
      * @param cedula parametro para filtrar un profesor
      * @return Profesor
+     * @throws co.edu.ucundinamarca.exception.ObjectNotFoundException
      */
     @Override
     public Profesor retornarProfesorCedula(String cedula) throws ObjectNotFoundException {
@@ -241,7 +241,7 @@ public class ProfesorServiceImpl extends DatosImpl implements IProfesorService {
      * @return boolean que valida si la edicion fue correcta
      */
     @Override
-    public void editarProfesor(Profesor profesor) throws IOException, FileNotFoundException, ClassNotFoundException {
+    public void editarProfesor(Profesor profesor) throws IOException, FileNotFoundException, ClassNotFoundException, ObjectNotFoundException {
         this.eliminarProfesor(profesor.getId());
         this.registroProfesor(profesor);
         this.llenarProfesor();
@@ -254,9 +254,10 @@ public class ProfesorServiceImpl extends DatosImpl implements IProfesorService {
      * @param materia Variable para saber la materia por la cual se esta
      * filtrando
      * @return List
+     * @throws co.edu.ucundinamarca.exception.ObjectNotFoundException
      */
     @Override
-    public List<Profesor> retornarProfesorMateria(String materia) throws IOException, FileNotFoundException, ClassNotFoundException {
+    public List<Profesor> retornarProfesorMateria(String materia) throws IOException, FileNotFoundException, ClassNotFoundException, ObjectNotFoundException {
         List<Profesor> profesores = new ArrayList();
         if (this.leer() != null) {
             this.ListaProfesores = this.leer();
@@ -280,22 +281,12 @@ public class ProfesorServiceImpl extends DatosImpl implements IProfesorService {
     @Override
     public void insertarProfesor(ProfesorBD profesorInsertar) throws Exception {
 
-//        if (profesorInsertar.getNombre() == null || profesorInsertar.getEdad() == null || profesorInsertar.getCorreo() == null
-//                || profesorInsertar.getApellido() == null || profesorInsertar.getCedula() == null) {
-//            throw new IdVacioException("Uno de los atributos del JSON esta vacio");
-//        } else {
-        traerCedula(Integer.parseInt(profesorInsertar.getCedula().toString()));
-        if (estado == false) {
-            String cadenaSql = " INSERT INTO public.profesor(cedula_profesor, nombre_profesor, apellido_profesor, correo_profesor, edad_correo)"
-                    + "VALUES (" + Integer.parseInt(profesorInsertar.getCedula().toString()) + ",'"
-                    + profesorInsertar.getNombre() + "','" + profesorInsertar.getApellido() + "','" + profesorInsertar.getCorreo() + "'," + Integer.parseInt(profesorInsertar.getEdad().toString()) + ");";
-            modifacionBaseDatos(cadenaSql);
-            traerUltimoID();
-            insertarTablaAsociativa(profesorInsertar.getListaMateria(), this.idProfesor);
-        } else {
-            throw new NoValidoException("La cedula ya se encuentra registrada");
-        }
-//        }
+        String cadenaSql = " INSERT INTO public.profesor(cedula_profesor, nombre_profesor, apellido_profesor, correo_profesor, edad_correo)"
+                + "VALUES (" + Integer.parseInt(profesorInsertar.getCedula().toString()) + ",'"
+                + profesorInsertar.getNombre() + "','" + profesorInsertar.getApellido() + "','" + profesorInsertar.getCorreo() + "'," + Integer.parseInt(profesorInsertar.getEdad().toString()) + ");";
+        modifacionBaseDatos(cadenaSql);
+        traerUltimoID();
+        insertarTablaAsociativa(profesorInsertar.getListaMateria(), this.idProfesor);
 
     }
 

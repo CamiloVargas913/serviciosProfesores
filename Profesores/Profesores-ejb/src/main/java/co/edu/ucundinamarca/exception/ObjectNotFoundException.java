@@ -9,7 +9,7 @@ package co.edu.ucundinamarca.exception;
  *
  * @author david
  */
-public class ObjectNotFoundException extends RuntimeException {
+public class ObjectNotFoundException extends Exception {
     public ObjectNotFoundException(String message) {
         super(message);
     }

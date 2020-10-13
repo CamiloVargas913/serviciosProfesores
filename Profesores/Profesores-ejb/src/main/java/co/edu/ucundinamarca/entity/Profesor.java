@@ -3,9 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package co.edu.ucundinamarca.dto;
+package co.edu.ucundinamarca.entity;
+
 import java.io.Serializable;
-import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -13,39 +19,65 @@ import javax.validation.constraints.Size;
  *
  * @author Camilo Vargas
  */
+@Entity
+@Table(name = "profesor")
 public class Profesor implements Serializable {
 
     /**
      * id que identifica al profesor
      */
-    @NotNull(message = "Id requerido")
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     /**
      * nombre del profesor
      */
-    @NotNull(message = "Nombre requerido")
+    @Column(name = "nombre_profesor")
+    //@NotNull(message = "Nombre requerido")
     private String nombre;
     /**
      * apellido del profesor
      */
+    @Column(name = "apellido_profesor")
     @NotNull(message = "Apellido requerido")
     private String apellido;
     /**
-     * listado de las materias que imparte
-     */
-    @NotNull(message = "Lista de materias requerido")
-    private List<String> listaMateria;
-    /**
      * correo personal del profesor
      */
+    @Column(name = "correo_profesor")
     @NotNull(message = "Correp requerido")
     private String correo;
     /**
      * cedula del profesor
      */
+    @Column(name = "cedula_profesor")
     @NotNull(message = "Cedula requerida")
-    @Size(min=7, max=10,message = "cedula maximo 10 caracteres y minimo 7 caracteres ")
+    @Size(min = 7, max = 10, message = "cedula maximo 10 caracteres y minimo 7 caracteres ")
     private String cedula;
+
+    @Column(name = "edad_profesor")
+    @NotNull(message = "Edad requerida")
+    private int edad;
+
+    public Profesor(int id, String nombre, String apellido, String correo, String cedula, int edad) {
+        this.id = id;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.correo = correo;
+        this.cedula = cedula;
+        this.edad = edad;
+    }
+
+    public Profesor() {
+    }
+
+    public int getEdad() {
+        return edad;
+    }
+
+    public void setEdad(int edad) {
+        this.edad = edad;
+    }
 
     /**
      * metodo para obtener el id del profesor
@@ -70,7 +102,6 @@ public class Profesor implements Serializable {
      *
      * @return String
      */
-
     public String getNombre() {
         return nombre;
     }
@@ -103,28 +134,9 @@ public class Profesor implements Serializable {
     }
 
     /**
-     * metodo para obtener el listado de materias
-     *
-     * @return List
-     */
-
-    public List<String> getListaMateria() {
-        return listaMateria;
-    }
-
-    /**
-     * metodo para setear la lista de materias
-     *
-     * @param listaMateria variable para guardar la lista de materias que dicta del profesor
-     */
-    public void setListaMateria(List<String> listaMateria) {
-        this.listaMateria = listaMateria;
-    }
-
-    /**
      * metodo para obtener el correo del profesor
      *
-     * @return String 
+     * @return String
      */
     public String getCorreo() {
         return correo;
@@ -150,6 +162,7 @@ public class Profesor implements Serializable {
 
     /**
      * metodo pars setear la cedula del profesor
+     *
      * @param cedula variable para guardar la cedula del profesor
      */
     public void setCedula(String cedula) {

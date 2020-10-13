@@ -30,7 +30,7 @@ public class ConstraintViolationFilter implements ExceptionMapper<ConstraintViol
      private String prepareMessage(ConstraintViolationException exception) {
         String msg = "";
         for (ConstraintViolation<?> cv : exception.getConstraintViolations()) {
-            msg = cv.getMessage();
+            msg += cv.getMessage() + "\n";
         }
         return msg;
     }    

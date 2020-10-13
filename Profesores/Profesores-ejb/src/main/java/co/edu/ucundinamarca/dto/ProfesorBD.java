@@ -31,7 +31,6 @@ public class ProfesorBD implements Serializable{
     private Integer edad;
     
     @NotNull
-    @Min(9999999)
     //@ApiModelProperty(value = "cedula del profesor", required = true)
     private Integer cedula;
     

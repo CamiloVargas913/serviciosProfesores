@@ -9,6 +9,7 @@ co\edu\ucundinamarca\swagger\swagger.class
 co\edu\ucundinamarca\exception\filter\IndexOutOfBoundExceptionFilter.class
 co\edu\ucundinamarca\exception\filter\IOExceptionFilter.class
 co\edu\ucundinamarca\exception\filter\WebApplicationExceptionFilter.class
+co\edu\ucundinamarca\controller\ProfesoEntityController.class
 co\edu\ucundinamarca\pojo\ErrorWrapper.class
 co\edu\ucundinamarca\exception\filter\ConstraintViolationFilter.class
 co\edu\ucundinamarca\exception\filter\NewClassNotAllowedExceptionFilter.class

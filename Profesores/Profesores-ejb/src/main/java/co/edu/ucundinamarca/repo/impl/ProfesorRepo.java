@@ -7,6 +7,7 @@ package co.edu.ucundinamarca.repo.impl;
 
 import co.edu.ucundinamarca.entity.Profesor;
 import co.edu.ucundinamarca.repo.IProfesorRepo;
+import static java.lang.Integer.parseInt;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -53,7 +54,8 @@ public class ProfesorRepo implements IProfesorRepo {
         Query query = this.entity.createNamedQuery("Profesor.validarCedula");
         query.setParameter("cedula", cedula);
         query.setParameter("id", id);
-        return (Integer) query.getSingleResult();
+        String data = query.getSingleResult().toString();
+        return parseInt(data);
     }
 
     @Override
@@ -61,21 +63,24 @@ public class ProfesorRepo implements IProfesorRepo {
         Query query = this.entity.createNamedQuery("Profesor.validarCorreo");
         query.setParameter("correo", correo);
         query.setParameter("id", id);
-        return (Integer) query.getSingleResult();
+        String data = query.getSingleResult().toString();
+        return parseInt(data);
     }
 
     @Override
     public Integer validarCedulaInsert(String cedula) {
         Query query = this.entity.createNamedQuery("Profesor.validarCedulaInsert");
         query.setParameter("cedula", cedula);
-        return (Integer) query.getSingleResult();
+         String data = query.getSingleResult().toString();
+        return parseInt(data);
     }
 
     @Override
     public Integer validarCorreoInsert(String correo) {
         Query query = this.entity.createNamedQuery("Profesor.validarCorreoInsert");
         query.setParameter("correo", correo);
-        return (Integer) query.getSingleResult();
+         String data = query.getSingleResult().toString();
+        return parseInt(data);
     }
 
 }

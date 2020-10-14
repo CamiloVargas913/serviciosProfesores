@@ -61,7 +61,7 @@ public class ProfesoEntityController {
         @ApiResponse(code = 422, message = "Invalid data"),
         @ApiResponse(code = 405, message = "Method Not Allowed"),
         @ApiResponse(code = 500, message = "Internal Server Error")})
-    public Response insertarProfesor(@Valid Profesor profesor) {
+    public Response insertarProfesor(@Valid Profesor profesor) throws ParamUsedException {
         this.service.insertar(profesor);
         return Response.status(Response.Status.CREATED).entity("Insercion correcta").build();
     }
@@ -78,7 +78,7 @@ public class ProfesoEntityController {
         @ApiResponse(code = 422, message = "Invalid data"),
         @ApiResponse(code = 405, message = "Method Not Allowed"),
         @ApiResponse(code = 500, message = "Internal Server Error")})
-    public Response listarId(@PathParam("id") @Min(1) Integer id) throws ObjectNotFoundException{
+    public Response listarId(@PathParam("id") @Min(1) Integer id) throws ObjectNotFoundException {
         Profesor dataProfesor = this.service.listarID(id);
         return Response.status(Response.Status.OK).entity(dataProfesor).build();
     }
@@ -112,11 +112,11 @@ public class ProfesoEntityController {
         @ApiResponse(code = 422, message = "Invalid data"),
         @ApiResponse(code = 405, message = "Method Not Allowed"),
         @ApiResponse(code = 500, message = "Internal Server Error")})
-    public Response editar(@Valid Profesor profesor) throws ParamUsedException, ParamRequiredException, ObjectNotFoundException{
+    public Response editar(@Valid Profesor profesor) throws ParamUsedException, ParamRequiredException, ObjectNotFoundException {
         this.service.modificar(profesor);
         return Response.status(Response.Status.OK).entity("Modificado correctamente").build();
     }
-    
+
     @Path("/eliminar/{id}")
     @DELETE
     @Produces(MediaType.APPLICATION_JSON)
@@ -129,7 +129,7 @@ public class ProfesoEntityController {
         @ApiResponse(code = 422, message = "Invalid data"),
         @ApiResponse(code = 405, message = "Method Not Allowed"),
         @ApiResponse(code = 500, message = "Internal Server Error")})
-    public Response eliminar(@PathParam("id" ) Integer id) throws ObjectNotFoundException{
+    public Response eliminar(@PathParam("id") Integer id) throws ObjectNotFoundException {
         this.service.eliminar(id);
         return Response.status(Response.Status.NO_CONTENT).entity("Eliminado correctamente").build();
     }

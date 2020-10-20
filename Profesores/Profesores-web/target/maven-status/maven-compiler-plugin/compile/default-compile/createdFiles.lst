@@ -2,6 +2,7 @@ co\edu\ucundinamarca\controller\ProfesoController.class
 co\edu\ucundinamarca\exception\filter\NullPointerExceptionFilter.class
 org\netbeans\rest\application\config\ApplicationConfig.class
 co\edu\ucundinamarca\exception\filter\FileNotFoundExceptionFilter.class
+co\edu\ucundinamarca\controller\AutorController.class
 co\edu\ucundinamarca\filter\SwaggerFilter.class
 co\edu\ucundinamarca\exception\filter\IllegalArgumentExceptionFilter.class
 co\edu\ucundinamarca\exception\filter\ExceptionFilter.class

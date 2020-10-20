@@ -8,6 +8,7 @@ package co.edu.ucundinamarca.repo.impl;
 import co.edu.ucundinamarca.entity.Autor;
 import co.edu.ucundinamarca.repo.IAutorRepo;
 import java.util.List;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -16,8 +17,9 @@ import javax.persistence.TypedQuery;
  *
  * @author david
  */
+@Stateless
 public class AutorRepo implements IAutorRepo{
-    @PersistenceContext(unitName = "co.edu.unicundi_proyectoEAR-ejb_ejb_1.0-SNAPSHOTPU")
+    @PersistenceContext(unitName = "co.edu.ucundinamarca_Profesores-ejb_ejb_1.0-SNAPSHOTPU")
     private EntityManager entity;
 
     @Override

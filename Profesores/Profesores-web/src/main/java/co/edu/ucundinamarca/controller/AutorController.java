@@ -5,6 +5,7 @@
  */
 package co.edu.ucundinamarca.controller;
 
+import co.edu.ucundinamarca.dto.Autordto;
 import co.edu.ucundinamarca.entity.Autor;
 import co.edu.ucundinamarca.exception.ObjectNotFoundException;
 import co.edu.ucundinamarca.service.IAutorService;
@@ -29,25 +30,26 @@ import javax.ws.rs.core.Response;
 @Stateless
 @Path("/autores")
 public class AutorController {
+
     @EJB
     private IAutorService service;
-    
-    @Path("/listar")
+
+    @Path("/listar/{estado}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response listr()  {
-        List<Autor> listarAutor = service.listar();
-        return Response.status(Response.Status.OK).entity(listarAutor).build();       
-    }        
-    
-    @Path("/retornarPorId/{id}")
+    public Response listr(@PathParam("estado") Integer estado) {
+        List<Autordto> listarAutor = service.listar(estado);
+        return Response.status(Response.Status.OK).entity(listarAutor).build();
+    }
+
+    @Path("/retornarPorId/{id}/{estado}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response retornarPorId(@PathParam("id" ) Integer id) throws ObjectNotFoundException {
-        Autor autor = service.listarPorId(id);
-        return Response.status(Response.Status.OK).entity(autor).build();       
-    }      
-    
+    public Response retornarPorId(@PathParam("id") Integer id, @PathParam("estado") Integer estado) throws ObjectNotFoundException {
+        Autordto autor = service.listarPorIdA(id, estado);
+        return Response.status(Response.Status.OK).entity(autor).build();
+    }
+
     @Path("/guardar")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
@@ -56,12 +58,12 @@ public class AutorController {
         service.guardar(autor);
         return Response.status(Response.Status.CREATED).build();
     }
-    
+
     @Path("/eliminar/{id}")
     @DELETE
     @Produces(MediaType.APPLICATION_JSON)
-    public Response eliminar(@PathParam("id" ) Integer id) throws ObjectNotFoundException {
+    public Response eliminar(@PathParam("id") Integer id) throws ObjectNotFoundException {
         service.eliminar(id);
-        return Response.status(Response.Status.NO_CONTENT).build();       
+        return Response.status(Response.Status.NO_CONTENT).build();
     }
 }

@@ -1,4 +1,4 @@
-/*
+    /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -14,17 +14,22 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  *
- * @author david
+ * @author Camilo
  */
-
 @Entity
 @Table(name = "libro")
+@XmlRootElement
+@XmlAccessorType(value = XmlAccessType.FIELD)
 public class Libro implements Serializable {
-    @Id
+   @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
@@ -36,6 +41,7 @@ public class Libro implements Serializable {
     
     @ManyToOne
     @JoinColumn(name = "id_autor", nullable = false)
+    @XmlTransient
     private Autor autor;
 
     public Libro() {
@@ -81,4 +87,5 @@ public class Libro implements Serializable {
     public void setAutor(Autor autor) {
         this.autor = autor;
     }
+    
 }

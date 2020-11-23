@@ -5,6 +5,7 @@
  */
 package co.edu.ucundinamarca.controller;
 
+import co.edu.ucundinamarca.dto.ListarPaginadoDto;
 import co.edu.ucundinamarca.entity.Profesor;
 import co.edu.ucundinamarca.exception.ObjectNotFoundException;
 import co.edu.ucundinamarca.exception.ParamRequiredException;
@@ -83,7 +84,7 @@ public class ProfesoEntityController {
         return Response.status(Response.Status.OK).entity(dataProfesor).build();
     }
 
-    @Path("/listar")
+    @Path("/listar/page={page}/size={size}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
@@ -95,8 +96,8 @@ public class ProfesoEntityController {
         @ApiResponse(code = 422, message = "Invalid data"),
         @ApiResponse(code = 405, message = "Method Not Allowed"),
         @ApiResponse(code = 500, message = "Internal Server Error")})
-    public Response listar() {
-        List<Profesor> dataProfesor = this.service.listar();
+    public Response listar(@PathParam("page") int page, @PathParam("size") int size) {
+        ListarPaginadoDto dataProfesor = this.service.listar(page, size);
         return Response.status(Response.Status.OK).entity(dataProfesor).build();
     }
 

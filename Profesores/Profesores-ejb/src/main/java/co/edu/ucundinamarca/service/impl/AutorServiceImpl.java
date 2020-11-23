@@ -5,16 +5,24 @@
  */
 package co.edu.ucundinamarca.service.impl;
 
+import co.edu.ucundinamarca.dto.AutorLectorDto;
+import co.edu.ucundinamarca.dto.AutorVistaDto;
 import co.edu.ucundinamarca.dto.Autordto;
+import co.edu.ucundinamarca.dto.ListarPaginadoDto;
 import co.edu.ucundinamarca.entity.Autor;
+import co.edu.ucundinamarca.entity.AutorLector;
 import co.edu.ucundinamarca.entity.Libro;
+import co.edu.ucundinamarca.entity.ViewAutor;
 import co.edu.ucundinamarca.exception.ObjectNotFoundException;
+import co.edu.ucundinamarca.exception.ParamRequiredException;
+import co.edu.ucundinamarca.repo.IAutorLectorRepo;
 import co.edu.ucundinamarca.repo.IAutorRepo;
 import co.edu.ucundinamarca.service.IAutorService;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import org.modelmapper.ModelMapper;
 
 /**
  *
@@ -26,46 +34,40 @@ public class AutorServiceImpl implements IAutorService {
     @EJB
     private IAutorRepo repo;
 
-    @Override
-    public List<Autordto> listar(int estado) {
-        List<Autordto> autor = new ArrayList<>();
-        List<Autor> autor2 = repo.listar();
-        for (Autor aur : autor2) {
-            List<Libro> libro = new ArrayList<>();
-            Autordto pojo = new Autordto();
-            pojo.setId(aur.getId());
-            pojo.setApellido(aur.getApellido());
-            pojo.setFecha(aur.getFecha());
-            pojo.setNombre(aur.getNombre());
-            for (Libro libros : aur.getLibro()) {
-                Libro libr = new Libro();
-                libr.setId(libros.getId());
-                libr.setAutor(libros.getAutor());
-                libr.setEditorial(libros.getEditorial());
-                libro.add(libr);
-            }
-            if (estado == 1) {
-                pojo.setLibro(libro);
-            }
-            autor.add(pojo);
-        }
+    @EJB
+    private IAutorLectorRepo repoAutorLector;
 
-        return autor;
+    @Override
+    public ListarPaginadoDto listar(boolean estado, int page, int size) {
+        page = (page) * size;
+        ListarPaginadoDto paginado = new ListarPaginadoDto() {
+        };
+        List<Autor> listaAutor = repo.listar("Autor.listarTodo", page, size);
+        if (!estado) {
+            for (Autor lista : listaAutor) {
+                lista.setLibro(null);
+            }
+        }
+        paginado.setContent(listaAutor);
+        paginado.setTotalRegistros(repo.totalRegistros());
+        return paginado;
     }
 
     @Override
     public Autor listarPorId(Integer id) throws ObjectNotFoundException {
-        Autor autor = repo.listarPorId(id);
-        if (autor == null) {
+
+        if (repo.validarExisteAutor(id) == 0) {
             throw new ObjectNotFoundException("Autor no existe.");
         } else {
+            Autor autor = repo.listarPorId(id);
             return autor;
         }
     }
 
     @Override
-    public Autordto listarPorIdA(Integer id, int estado) throws ObjectNotFoundException {
+    public Autordto listarPorIdA(Integer id, boolean estado) throws ObjectNotFoundException {
         Autor autor = repo.listarPorId(id);
+            System.out.println(autor.getDireccion().getBarrio());
         Autordto autor2 = new Autordto();
 
         if (autor == null) {
@@ -75,7 +77,7 @@ public class AutorServiceImpl implements IAutorService {
             autor2.setNombre(autor.getNombre());
             autor2.setFecha(autor.getFecha());
             autor2.setId(autor.getId());
-            if (estado == 1) {
+            if (estado) {
                 autor2.setLibro(autor.getLibro());
                 return autor2;
             } else {
@@ -91,17 +93,102 @@ public class AutorServiceImpl implements IAutorService {
                 libro.setAutor(autor);
             }
         }
+        if (autor.getDireccion() != null) {
+            autor.getDireccion().setAutor(autor);
+        }
         repo.guardar(autor);
     }
 
     @Override
-    public void editar(Autor autor) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void editar(Autor autor) throws ObjectNotFoundException, ParamRequiredException {
+        if (autor.getId() == null) {
+            throw new ParamRequiredException("Id es requerido para edición");
+        } else {
+            if (repo.validarExisteAutor(autor.getId()) == 0) {
+                throw new ObjectNotFoundException("Autor no existe.");
+            } else {
+                // si se quiere que edite la direccion o crear metodo 
+                repo.editar(autor);
+            }
+        }
+
     }
 
     @Override
     public void eliminar(Integer id) throws ObjectNotFoundException {
         Autor autor = this.listarPorId(id);
         repo.eliminar(autor);
+    }
+
+    @Override
+    public void cambiarEstado(Integer id) throws ObjectNotFoundException {
+        Autor autor = this.listarPorId(id);
+        if (autor.isEstado()) {
+            repo.cambiarEstado(id, false);
+        } else {
+            repo.cambiarEstado(id, true);
+        }
+
+    }
+
+    @Override
+    public void eliminarSinLibros(Integer id) throws Exception {
+        Autor autor = this.listarPorId(id);
+        if (autor.getLibro().isEmpty()) {
+            repo.eliminar(autor);
+        } else {
+            throw new Exception("Debe eliminar Primero los libros asociados");
+        }
+
+    }
+
+    @Override
+    public List<ViewAutor> listarVista() {
+        List<ViewAutor> ViewAutor = repo.listarVista();
+        return ViewAutor;
+    }
+
+    @Override
+    public ViewAutor listarVistaId(Integer id) throws ObjectNotFoundException {
+
+        if (repo.validarExisteAutor(id) == 0) {
+            throw new ObjectNotFoundException("Autor no existe.");
+        } else {
+            ViewAutor vistaAutor = repo.listarVistaId(id);
+            return vistaAutor;
+        }
+
+    }
+
+    @Override
+    public void asociarAutorLector(AutorLector autorLector) throws ObjectNotFoundException, ParamRequiredException {
+        if (autorLector == null || autorLector.getAutor().getId() == null || autorLector.getLector().getId() == null) {
+            throw new ParamRequiredException("Id del lector y autoe es requerido para asignacion");
+        } else {
+            repoAutorLector.guardar(autorLector);
+        }
+
+    }
+
+    @Override
+    public void desasociarAutorLector(int idAutor ,int idLector) throws  ObjectNotFoundException {
+        if (repoAutorLector.desasociarLector(idAutor, idLector)== 0) {
+            throw new ObjectNotFoundException("La Asociacion no exixte.");
+        }
+
+    }
+
+    @Override
+    public List<AutorLectorDto> listarAutorLector(Integer idAutor) {
+        List<AutorLector> listaAutorLector = repoAutorLector.listarAutorLector(idAutor);
+        List<AutorLectorDto> lista = new ArrayList<>();
+        for (AutorLector lis : listaAutorLector) {
+            ModelMapper modelMapper = new ModelMapper();
+            AutorLectorDto autorLectorDto = modelMapper.map(lis, AutorLectorDto.class);
+            //autorLectorDto.getAutor().setLibro(null);
+            autorLectorDto.setAutor(null);
+            lista.add(autorLectorDto);
+        }
+        return lista;
     }
 }

@@ -6,11 +6,15 @@
 package co.edu.ucundinamarca.repo.impl;
 
 import co.edu.ucundinamarca.entity.Autor;
+import co.edu.ucundinamarca.entity.ViewAutor;
+import co.edu.ucundinamarca.repo.AbstractFacade;
 import co.edu.ucundinamarca.repo.IAutorRepo;
+import static java.lang.Integer.parseInt;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 /**
@@ -18,33 +22,60 @@ import javax.persistence.TypedQuery;
  * @author david
  */
 @Stateless
-public class AutorRepo implements IAutorRepo{
+public class AutorRepo extends AbstractFacade<Autor, Integer> implements IAutorRepo {
+
     @PersistenceContext(unitName = "co.edu.ucundinamarca_Profesores-ejb_ejb_1.0-SNAPSHOTPU")
     private EntityManager entity;
 
-    @Override
-    public List<Autor> listar() {
-        TypedQuery<Autor> listaAutor = this.entity.createNamedQuery("Autor.listarTodo", Autor.class);                
-        return listaAutor.getResultList();        
+    public AutorRepo() {
+        super(Autor.class);
     }
 
     @Override
-    public Autor listarPorId(Integer id) {
-        return this.entity.find(Autor.class, id);
+    public Integer validarExisteAutor(Integer id) {
+        Query query = this.entity.createNamedQuery("Autor.validarAutorId");
+        query.setParameter("id", id);
+        String data = query.getSingleResult().toString();
+        return parseInt(data);
+
     }
 
     @Override
-    public void guardar(Autor autor) {
-        this.entity.persist(autor);
+    public void cambiarEstado(Integer id, boolean estado) {
+        Query query = this.entity.createNamedQuery("Autor.cambiarEstado");
+        query.setParameter("estado", estado);
+        query.setParameter("id", id);
+        query.executeUpdate();
     }
 
     @Override
-    public void editar(Autor autor) {
-        this.entity.merge(autor);
+    protected EntityManager getEntityManager() {
+        return entity;
     }
 
     @Override
-    public void eliminar(Autor autor) {
-        this.entity.remove(autor);
+    public List<ViewAutor> listarVista() {
+        TypedQuery<ViewAutor> listaAutor = this.entity.createNamedQuery("ViewAutor.listarView", ViewAutor.class);
+        return listaAutor.getResultList();
     }
+
+    @Override
+    public ViewAutor listarVistaId(Integer id) {
+        ViewAutor listaAutor = this.entity.find(ViewAutor.class, id);
+        return listaAutor;
+    }
+
+    @Override
+    public Integer totalRegistros() {
+        Query query = this.entity.createNamedQuery("Autor.obtenerTotal");
+        String data = query.getSingleResult().toString();
+        return parseInt(data);
+    }
+    
+    @Override
+    public Autor listarPorId(Integer id){
+        Autor listaAutor = this.entity.find(Autor.class, id);
+        return listaAutor;
+    }
+
 }

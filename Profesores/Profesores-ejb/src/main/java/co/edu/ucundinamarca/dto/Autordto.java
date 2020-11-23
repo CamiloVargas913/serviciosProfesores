@@ -5,6 +5,7 @@
  */
 package co.edu.ucundinamarca.dto;
 
+import co.edu.ucundinamarca.entity.Direccion;
 import co.edu.ucundinamarca.entity.Libro;
 import java.util.Date;
 import java.util.List;
@@ -23,8 +24,28 @@ public class Autordto {
     private Date fecha;
 
     private List<Libro> libro;
+    
+    private boolean estado;
+    
+    private Direccion direccion;
 
     public Autordto() {
+    }
+
+    public Direccion getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(Direccion direccion) {
+        this.direccion = direccion;
+    }
+
+    public boolean isEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
     }
 
     public Integer getId() {

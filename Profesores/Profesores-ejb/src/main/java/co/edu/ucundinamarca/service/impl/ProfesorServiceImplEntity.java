@@ -5,6 +5,7 @@
  */
 package co.edu.ucundinamarca.service.impl;
 
+import co.edu.ucundinamarca.dto.ListarPaginadoDto;
 import co.edu.ucundinamarca.entity.Profesor;
 import co.edu.ucundinamarca.exception.ObjectNotFoundException;
 import co.edu.ucundinamarca.exception.ParamRequiredException;
@@ -26,19 +27,25 @@ public class ProfesorServiceImplEntity implements IProfesorServiceEntity {
     private IProfesorRepo repo;
 
     @Override
-    public List<Profesor> listar() {
-        return this.repo.listar();
+    public ListarPaginadoDto listar(int page,int size) {
+        page = (page) * size;
+        ListarPaginadoDto paginado = new ListarPaginadoDto() {};
+        List<Profesor> profe = this.repo.listar("Profesor.listarTodo", page,size);
+        
+        paginado.setContent(profe);
+        paginado.setTotalRegistros(repo.totalRegistros());        
+        return paginado;
     }
 
     @Override
     public void insertar(Profesor profesor) throws ParamUsedException{
         this.validarCamposInsert(profesor);
-        this.repo.insertar(profesor);
+        this.repo.guardar(profesor);
     }
 
     @Override
     public Profesor listarID(Integer id) throws ObjectNotFoundException{
-        Profesor profesor = repo.listarID(id);
+        Profesor profesor = repo.listarPorId(id);
         if(profesor != null) 
             return profesor;
         else
@@ -52,7 +59,7 @@ public class ProfesorServiceImplEntity implements IProfesorServiceEntity {
         else {
             this.listarID(profesor.getId()); 
             this.validarCamposEdicion(profesor);
-            repo.modificar(profesor);
+            repo.editar(profesor);
         }
     }
     

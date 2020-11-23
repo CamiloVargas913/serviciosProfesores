@@ -15,11 +15,16 @@ import javax.ejb.Local;
  */
 @Local
 public interface IProfesorRepo {
-    public List<Profesor> listar();
-    public void insertar(Profesor profesor);
-    public Profesor listarID(Integer id);
-    public void modificar(Profesor profesor);
-    public void eliminar(Profesor profesor);
+    public List<Profesor> listar(String consulta,int page,int size);
+    
+    public Profesor listarPorId(Integer id);
+    
+    public void guardar(Profesor libro);
+    
+    public void editar(Profesor libro);
+   
+    public void eliminar(Profesor libro);  
+   
     public Integer validarCedula(String cedula, Integer id);
     
     public Integer validarCorreo(String correo, Integer id);
@@ -27,4 +32,6 @@ public interface IProfesorRepo {
     public Integer validarCedulaInsert(String cedula);
     
     public Integer validarCorreoInsert(String correo);
+    
+    public Integer totalRegistros();
 }

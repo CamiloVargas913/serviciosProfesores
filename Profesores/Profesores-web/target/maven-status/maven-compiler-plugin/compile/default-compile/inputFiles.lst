@@ -2,11 +2,13 @@ E:\Ucundinamarca\8vo semestre\linea\serviciosProfesores\Profesores\Profesores-we
 E:\Ucundinamarca\8vo semestre\linea\serviciosProfesores\Profesores\Profesores-web\src\main\java\co\edu\ucundinamarca\controller\AutorController.java
 E:\Ucundinamarca\8vo semestre\linea\serviciosProfesores\Profesores\Profesores-web\src\main\java\co\edu\ucundinamarca\exception\filter\WebApplicationExceptionFilter.java
 E:\Ucundinamarca\8vo semestre\linea\serviciosProfesores\Profesores\Profesores-web\src\main\java\co\edu\ucundinamarca\exception\filter\IOExceptionFilter.java
+E:\Ucundinamarca\8vo semestre\linea\serviciosProfesores\Profesores\Profesores-web\src\main\java\co\edu\ucundinamarca\controller\LibroController.java
 E:\Ucundinamarca\8vo semestre\linea\serviciosProfesores\Profesores\Profesores-web\src\main\java\co\edu\ucundinamarca\exception\filter\IllegalArgumentExceptionFilter.java
 E:\Ucundinamarca\8vo semestre\linea\serviciosProfesores\Profesores\Profesores-web\src\main\java\co\edu\ucundinamarca\controller\ProfesoController.java
 E:\Ucundinamarca\8vo semestre\linea\serviciosProfesores\Profesores\Profesores-web\src\main\java\co\edu\ucundinamarca\controller\ProfesoEntityController.java
 E:\Ucundinamarca\8vo semestre\linea\serviciosProfesores\Profesores\Profesores-web\src\main\java\co\edu\ucundinamarca\exception\filter\NullPointerExceptionFilter.java
 E:\Ucundinamarca\8vo semestre\linea\serviciosProfesores\Profesores\Profesores-web\src\main\java\co\edu\ucundinamarca\pojo\ErrorWrapper.java
+E:\Ucundinamarca\8vo semestre\linea\serviciosProfesores\Profesores\Profesores-web\src\main\java\co\edu\ucundinamarca\exception\filter\CorsFilter.java
 E:\Ucundinamarca\8vo semestre\linea\serviciosProfesores\Profesores\Profesores-web\src\main\java\co\edu\ucundinamarca\exception\filter\ParamUsedExceptionFilter.java
 E:\Ucundinamarca\8vo semestre\linea\serviciosProfesores\Profesores\Profesores-web\src\main\java\co\edu\ucundinamarca\exception\filter\FileNotFoundExceptionFilter.java
 E:\Ucundinamarca\8vo semestre\linea\serviciosProfesores\Profesores\Profesores-web\src\main\java\org\netbeans\rest\application\config\ApplicationConfig.java

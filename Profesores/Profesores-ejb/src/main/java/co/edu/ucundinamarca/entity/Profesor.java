@@ -27,11 +27,12 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "profesor")
 @NamedQueries({
-    @NamedQuery(name = "Profesor.listarTodo", query = "SELECT p FROM Profesor p"),
+    @NamedQuery(name = "Profesor.listarTodo", query = "SELECT p FROM Profesor p GROUP BY p.id"),
     @NamedQuery(name = "Profesor.validarCedula", query = "SELECT COUNT(p.cedula)  FROM Profesor p WHERE p.cedula = :cedula AND p.id <> :id"),
     @NamedQuery(name = "Profesor.validarCorreo", query = "SELECT COUNT(p.correo)  FROM Profesor p WHERE p.correo = :correo AND p.id <> :id"),
     @NamedQuery(name = "Profesor.validarCedulaInsert", query = "SELECT COUNT(p.cedula)  FROM Profesor p WHERE p.cedula = :cedula"),
-    @NamedQuery(name = "Profesor.validarCorreoInsert", query = "SELECT COUNT(p.correo)  FROM Profesor p WHERE p.correo = :correo")
+    @NamedQuery(name = "Profesor.validarCorreoInsert", query = "SELECT COUNT(p.correo)  FROM Profesor p WHERE p.correo = :correo"),
+    @NamedQuery(name = "Profesor.obtenerTotal", query = "SELECT COUNT(p.id)  FROM Profesor p ")   
 })
 public class Profesor implements Serializable {
 

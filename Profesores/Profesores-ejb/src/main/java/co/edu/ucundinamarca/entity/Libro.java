@@ -5,6 +5,7 @@
  */
 package co.edu.ucundinamarca.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,21 +14,20 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
-import org.codehaus.jackson.annotate.JsonIgnore;
-
 /**
  *
  * @author Camilo
  */
 @Entity
 @Table(name = "libro")
-@XmlRootElement
-@XmlAccessorType(value = XmlAccessType.FIELD)
+@NamedQueries({
+    @NamedQuery(name = "Libro.listarTodo", query = "SELECT a FROM Libro a GROUP BY a.id"),
+    @NamedQuery(name = "Libro.obtenerTotal", query = "SELECT COUNT(p.id)  FROM Libro p ")   
+})
+
 public class Libro implements Serializable {
    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,7 +41,6 @@ public class Libro implements Serializable {
     
     @ManyToOne
     @JoinColumn(name = "id_autor", nullable = false)
-    @XmlTransient
     private Autor autor;
 
     public Libro() {
@@ -78,7 +77,7 @@ public class Libro implements Serializable {
     public void setEditorial(String editorial) {
         this.editorial = editorial;
     }
-
+    
     @JsonIgnore
     public Autor getAutor() {
         return autor;

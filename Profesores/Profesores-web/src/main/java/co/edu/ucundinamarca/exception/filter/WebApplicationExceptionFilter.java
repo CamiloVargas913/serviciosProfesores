@@ -27,6 +27,7 @@ public class WebApplicationExceptionFilter implements ExceptionMapper<WebApplica
             ErrorWrapper error = new ErrorWrapper(ex.getMessage(), "405", "METHOD_NOT_ALLOWED");
             return Response.status(Response.Status.METHOD_NOT_ALLOWED).entity(error).build();
         }else{
+            ex.printStackTrace();
             ErrorWrapper error = new ErrorWrapper(ex.getMessage(), "400", "BAD_REQUEST");
             return Response.status(Response.Status.BAD_REQUEST).entity(error).build();
         }

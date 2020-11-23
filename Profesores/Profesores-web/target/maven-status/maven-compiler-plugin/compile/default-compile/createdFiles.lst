@@ -5,6 +5,7 @@ co\edu\ucundinamarca\exception\filter\FileNotFoundExceptionFilter.class
 co\edu\ucundinamarca\controller\AutorController.class
 co\edu\ucundinamarca\filter\SwaggerFilter.class
 co\edu\ucundinamarca\exception\filter\IllegalArgumentExceptionFilter.class
+co\edu\ucundinamarca\controller\LibroController.class
 co\edu\ucundinamarca\exception\filter\ExceptionFilter.class
 co\edu\ucundinamarca\swagger\swagger.class
 co\edu\ucundinamarca\exception\filter\ParamUsedExceptionFilter.class
@@ -15,5 +16,6 @@ co\edu\ucundinamarca\controller\ProfesoEntityController.class
 co\edu\ucundinamarca\pojo\ErrorWrapper.class
 co\edu\ucundinamarca\exception\filter\ConstraintViolationFilter.class
 co\edu\ucundinamarca\exception\filter\ParamRequiredExceptionFilter.class
+co\edu\ucundinamarca\exception\filter\CorsFilter.class
 co\edu\ucundinamarca\exception\filter\NewClassNotAllowedExceptionFilter.class
 co\edu\ucundinamarca\exception\filter\ObjectNotFoundExceptionFilter.class

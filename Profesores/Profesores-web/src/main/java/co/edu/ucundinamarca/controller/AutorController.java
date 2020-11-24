@@ -11,6 +11,7 @@ import co.edu.ucundinamarca.dto.Autordto;
 import co.edu.ucundinamarca.dto.ListarPaginadoDto;
 import co.edu.ucundinamarca.entity.Autor;
 import co.edu.ucundinamarca.entity.AutorLector;
+import co.edu.ucundinamarca.entity.Lector;
 import co.edu.ucundinamarca.entity.ViewAutor;
 import co.edu.ucundinamarca.exception.ObjectNotFoundException;
 import co.edu.ucundinamarca.exception.ParamRequiredException;
@@ -44,8 +45,8 @@ public class AutorController {
     @Path("/listar/{estado}/page={page}/size={size}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response listr(@PathParam("estado") boolean estado,@PathParam("page") int page,@PathParam("size") int size){
-        ListarPaginadoDto listarAutor = service.listar(estado,page,size);
+    public Response listr(@PathParam("estado") boolean estado, @PathParam("page") int page, @PathParam("size") int size) {
+        ListarPaginadoDto listarAutor = service.listar(estado, page, size);
         return Response.status(Response.Status.OK).entity(listarAutor).build();
     }
 
@@ -97,7 +98,7 @@ public class AutorController {
         service.editar(autor);
         return Response.status(Response.Status.NO_CONTENT).build();
     }
-    
+
     @Path("/listarVista")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -105,7 +106,7 @@ public class AutorController {
         List<ViewAutor> listarAutor = service.listarVista();
         return Response.status(Response.Status.OK).entity(listarAutor).build();
     }
-    
+
     @Path("/retornarPorIdV/{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -113,7 +114,7 @@ public class AutorController {
         ViewAutor autor = service.listarVistaId(id);
         return Response.status(Response.Status.OK).entity(autor).build();
     }
-    
+
     @Path("/asociarLector")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
@@ -122,11 +123,11 @@ public class AutorController {
         service.asociarAutorLector(autorLector);
         return Response.status(Response.Status.CREATED).build();
     }
-    
+
     @Path("/desasociarLector/idAutor={idAutor}/idLector={idLector}")
     @DELETE
     @Produces(MediaType.APPLICATION_JSON)
-    public Response desasociarLector(@PathParam("idAutor") Integer idAutor,@PathParam("idLector") Integer idLector) throws  ObjectNotFoundException {
+    public Response desasociarLector(@PathParam("idAutor") Integer idAutor, @PathParam("idLector") Integer idLector) throws ObjectNotFoundException {
         service.desasociarAutorLector(idAutor, idLector);
         return Response.status(Response.Status.NO_CONTENT).build();
     }
@@ -134,8 +135,25 @@ public class AutorController {
     @Path("/listarLector/{idAutor}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response listarLector(@PathParam("idAutor") Integer id)  {
+    public Response listarLector(@PathParam("idAutor") Integer id) {
         List<AutorLectorDto> lista = service.listarAutorLector(id);
-        return Response.status(Response.Status.OK).entity(lista).build();       
-    }      
+        return Response.status(Response.Status.OK).entity(lista).build();
+    }
+
+    @Path("/listarLector/page={page}/size={size}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response listr(@PathParam("page") int page, @PathParam("size") int size) {
+        List<Lector> listarAutor = service.listarLector();
+        return Response.status(Response.Status.OK).entity(listarAutor).build();
+    }
+    
+    @Path("/listarLectorId/{id}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response listarLectorId(@PathParam("id") Integer id) throws ObjectNotFoundException  {
+        Lector autor = service.listarLectorId(id);
+        return Response.status(Response.Status.OK).entity(autor).build();
+    }
+
 }

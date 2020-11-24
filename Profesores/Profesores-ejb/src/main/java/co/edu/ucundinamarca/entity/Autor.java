@@ -36,7 +36,8 @@ import javax.persistence.TemporalType;
     @NamedQuery(name = "Autor.validarAutorId", query = "SELECT COUNT(p.id)  FROM Autor p WHERE p.id = :id"),
     @NamedQuery(name = "Autor.cambiarEstado", query = "UPDATE Autor a SET a.estado= :estado WHERE a.id = :id"),
     @NamedQuery(name = "Autor.actualizarAutor", query = "UPDATE Autor a SET a.nombre= :nombre, a.apellido= :apellido WHERE a.id = :id"),
-    @NamedQuery(name = "Autor.obtenerTotal", query = "SELECT COUNT(p.id)  FROM Autor p ")
+    @NamedQuery(name = "Autor.obtenerTotal", query = "SELECT COUNT(p.id)  FROM Autor p "),
+    @NamedQuery(name = "Autor.listarLectorTodo", query = "SELECT a FROM Lector a GROUP BY a.id"),
 })
 public class Autor implements Serializable {
 

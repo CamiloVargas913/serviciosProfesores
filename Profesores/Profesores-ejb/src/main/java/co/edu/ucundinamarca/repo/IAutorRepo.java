@@ -8,6 +8,7 @@ package co.edu.ucundinamarca.repo;
 import co.edu.ucundinamarca.dto.AutorVistaDto;
 import co.edu.ucundinamarca.dto.Autordto;
 import co.edu.ucundinamarca.entity.Autor;
+import co.edu.ucundinamarca.entity.Lector;
 import co.edu.ucundinamarca.entity.ViewAutor;
 import co.edu.ucundinamarca.exception.ObjectNotFoundException;
 import java.util.List;
@@ -39,5 +40,9 @@ public interface IAutorRepo {
     public ViewAutor listarVistaId(Integer id);
     
     public Integer totalRegistros();
+    
+    public List<Lector> listarLector(String consulta);
+    
+    public Lector listarLectorId(int id);
 
 }

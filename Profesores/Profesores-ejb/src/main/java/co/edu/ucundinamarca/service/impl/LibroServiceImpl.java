@@ -30,8 +30,9 @@ public class LibroServiceImpl implements ILibroService {
 
     @Override
     public ListarPaginadoDto listar(int page, int size) {
-        page=(page)*size;
-        ListarPaginadoDto paginado = new ListarPaginadoDto() {};
+        page = (page) * size;
+        ListarPaginadoDto paginado = new ListarPaginadoDto() {
+        };
         List<Libro> listaLibro = repo.listar("Libro.listarTodo", page, size);
         List<LibroDto> libroDto = new ArrayList<>();
 
@@ -47,7 +48,7 @@ public class LibroServiceImpl implements ILibroService {
         }
 
         paginado.setContent(listaLibro);
-        paginado.setTotalRegistros(repo.totalRegistros());        
+        paginado.setTotalRegistros(repo.totalRegistros());
         return paginado;
     }
 
@@ -62,8 +63,8 @@ public class LibroServiceImpl implements ILibroService {
         ModelMapper modelMapper = new ModelMapper();
         LibroDto dto = modelMapper.map(libro, LibroDto.class);
 
-        //dto.setAutor(null);
-        dto.getAutor().getLibro().clear();
+        dto.setAutor(null);
+        //dto.getAutor().getLibro().clear();
 
         return dto;
     }

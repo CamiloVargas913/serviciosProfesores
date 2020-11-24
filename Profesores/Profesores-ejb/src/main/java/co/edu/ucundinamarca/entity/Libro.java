@@ -14,39 +14,48 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  *
  * @author Camilo
  */
 @Entity
 @Table(name = "libro")
+@XmlRootElement
+@XmlAccessorType(value = XmlAccessType.FIELD)
 @NamedQueries({
     @NamedQuery(name = "Libro.listarTodo", query = "SELECT a FROM Libro a GROUP BY a.id"),
-    @NamedQuery(name = "Libro.obtenerTotal", query = "SELECT COUNT(p.id)  FROM Libro p ")   
+    @NamedQuery(name = "Libro.obtenerTotal", query = "SELECT COUNT(p.id)  FROM Libro p ")
 })
 
 public class Libro implements Serializable {
-   @Id
+
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(name = "nombre", nullable = false, length = 25)
     private String nombre;
-    
+
     @Column(name = "editorial", nullable = false, length = 15)
     private String editorial;
-    
+
     @ManyToOne
     @JoinColumn(name = "id_autor", nullable = false)
+//    @XmlTransient  la anotacion no permite guardar el autor
     private Autor autor;
 
     public Libro() {
-    
+
     }
-    
+
     public Libro(Integer id, String nombre, String editorial, Autor autor) {
         this.id = id;
         this.nombre = nombre;
@@ -77,7 +86,7 @@ public class Libro implements Serializable {
     public void setEditorial(String editorial) {
         this.editorial = editorial;
     }
-    
+
     @JsonIgnore
     public Autor getAutor() {
         return autor;
@@ -86,5 +95,5 @@ public class Libro implements Serializable {
     public void setAutor(Autor autor) {
         this.autor = autor;
     }
-    
+
 }

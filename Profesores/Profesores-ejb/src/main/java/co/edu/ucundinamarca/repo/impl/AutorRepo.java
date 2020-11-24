@@ -6,6 +6,7 @@
 package co.edu.ucundinamarca.repo.impl;
 
 import co.edu.ucundinamarca.entity.Autor;
+import co.edu.ucundinamarca.entity.Lector;
 import co.edu.ucundinamarca.entity.ViewAutor;
 import co.edu.ucundinamarca.repo.AbstractFacade;
 import co.edu.ucundinamarca.repo.IAutorRepo;
@@ -71,11 +72,16 @@ public class AutorRepo extends AbstractFacade<Autor, Integer> implements IAutorR
         String data = query.getSingleResult().toString();
         return parseInt(data);
     }
-    
+
     @Override
-    public Autor listarPorId(Integer id){
-        Autor listaAutor = this.entity.find(Autor.class, id);
-        return listaAutor;
+    public List<Lector> listarLector(String consulta) {
+        Query query = getEntityManager().createNamedQuery(consulta, Lector.class);
+        return query.getResultList();
+    }
+    @Override
+    public Lector listarLectorId(int id) {
+        Lector lector = this.entity.find(Lector.class, id);
+        return lector;
     }
 
 }

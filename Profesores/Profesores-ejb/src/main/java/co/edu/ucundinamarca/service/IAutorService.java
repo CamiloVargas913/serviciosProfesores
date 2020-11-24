@@ -11,6 +11,7 @@ import co.edu.ucundinamarca.dto.Autordto;
 import co.edu.ucundinamarca.dto.ListarPaginadoDto;
 import co.edu.ucundinamarca.entity.Autor;
 import co.edu.ucundinamarca.entity.AutorLector;
+import co.edu.ucundinamarca.entity.Lector;
 import co.edu.ucundinamarca.entity.ViewAutor;
 import co.edu.ucundinamarca.exception.ObjectNotFoundException;
 import co.edu.ucundinamarca.exception.ParamRequiredException;
@@ -49,4 +50,8 @@ public interface IAutorService {
     public List<AutorLectorDto> listarAutorLector(Integer idAutor);
     
    public void desasociarAutorLector(int idAutor ,int idLector) throws  ObjectNotFoundException ;
+   
+   public List<Lector> listarLector();
+   
+   public Lector listarLectorId(int id);
 }

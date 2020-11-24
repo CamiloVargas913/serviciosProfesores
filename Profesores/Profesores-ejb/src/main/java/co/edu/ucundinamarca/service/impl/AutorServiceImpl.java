@@ -11,6 +11,7 @@ import co.edu.ucundinamarca.dto.Autordto;
 import co.edu.ucundinamarca.dto.ListarPaginadoDto;
 import co.edu.ucundinamarca.entity.Autor;
 import co.edu.ucundinamarca.entity.AutorLector;
+import co.edu.ucundinamarca.entity.Lector;
 import co.edu.ucundinamarca.entity.Libro;
 import co.edu.ucundinamarca.entity.ViewAutor;
 import co.edu.ucundinamarca.exception.ObjectNotFoundException;
@@ -67,7 +68,6 @@ public class AutorServiceImpl implements IAutorService {
     @Override
     public Autordto listarPorIdA(Integer id, boolean estado) throws ObjectNotFoundException {
         Autor autor = repo.listarPorId(id);
-            System.out.println(autor.getDireccion().getBarrio());
         Autordto autor2 = new Autordto();
 
         if (autor == null) {
@@ -104,11 +104,19 @@ public class AutorServiceImpl implements IAutorService {
         if (autor.getId() == null) {
             throw new ParamRequiredException("Id es requerido para edición");
         } else {
-            if (repo.validarExisteAutor(autor.getId()) == 0) {
+            Autor autorAux = repo.listarPorId(autor.getId());
+
+            if (autor == null) {
                 throw new ObjectNotFoundException("Autor no existe.");
-            } else {
-                // si se quiere que edite la direccion o crear metodo 
-                repo.editar(autor);
+            }
+
+            autorAux.setApellido(autor.getApellido());
+            autorAux.setNombre(autor.getNombre());
+            autorAux.setFecha(autor.getFecha());
+
+            if (autor.getDireccion() != null) {
+                autorAux.getDireccion().setBarrio(autor.getDireccion().getBarrio());
+                autorAux.getDireccion().setDireccion(autor.getDireccion().getDireccion());
             }
         }
 
@@ -171,8 +179,8 @@ public class AutorServiceImpl implements IAutorService {
     }
 
     @Override
-    public void desasociarAutorLector(int idAutor ,int idLector) throws  ObjectNotFoundException {
-        if (repoAutorLector.desasociarLector(idAutor, idLector)== 0) {
+    public void desasociarAutorLector(int idAutor, int idLector) throws ObjectNotFoundException {
+        if (repoAutorLector.desasociarLector(idAutor, idLector) == 0) {
             throw new ObjectNotFoundException("La Asociacion no exixte.");
         }
 
@@ -191,4 +199,16 @@ public class AutorServiceImpl implements IAutorService {
         }
         return lista;
     }
+
+    @Override
+    public List<Lector> listarLector() {
+        List<Lector> listaLector = repo.listarLector("Autor.listarLectorTodo");
+        return listaLector;
+    }
+
+    @Override
+    public Lector listarLectorId(int id) {
+        return repo.listarLectorId(id);
+    }
+
 }

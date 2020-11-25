@@ -71,7 +71,7 @@ public class Direccion implements Serializable {
     public void setBarrio(String barrio) {
         this.barrio = barrio;
     }
-    
+
     @JsonIgnore
     public Autor getAutor() {
         return autor;

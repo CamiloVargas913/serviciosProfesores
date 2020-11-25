@@ -1,0 +1,61 @@
+<div class="center" [hidden]="route.children.length !==0">
+  <div class="buttons">
+    <button mat-raised-button color="primary" routerLink="agregar">Agregar Autor <mat-icon>people
+      </mat-icon></button>
+  </div>
+  <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+    <ng-container matColumnDef="nombre">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.nombre}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="apellido">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Apellido </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.apellido}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="direccion">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Direcciòn </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.direccion.direccion}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="barrio">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Barrio </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.direccion.barrio}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="estado">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Estado </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <ng-container *ngIf="element.estado else inactivo">
+          Activo
+        </ng-container>
+        <ng-template #inactivo>
+          Inactivo
+        </ng-template>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="acciones">
+      <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <button mat-button color="primary" [routerLink]="['edicion', element.id]">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-button color="warn" (click)="abrirDialogo(element, false)">
+          <mat-icon>published_with_changes</mat-icon>
+        </button>
+        <button mat-button color="warn" (click)="abrirDialogo(element,true)">
+          <mat-icon>delete_forever</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </table>
+
+  <mat-paginator [pageSize]="pageSize" [pageSizeOptions]="[2, 5, 10, 25, 100]" [length]="cantidad"
+    (page)="cambiarPagina($event)"></mat-paginator>
+</div>
+
+<router-outlet></router-outlet>

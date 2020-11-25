@@ -221,4 +221,17 @@ public class AutorServiceImpl implements IAutorService {
          repo.editarLector(lector);
     }
 
+    @Override
+    public void eliminarLector(Integer id) throws ObjectNotFoundException{
+        Lector lector = repo.listarLectorId(id);
+
+        System.out.println(lector.getApellido());
+        
+        if (lector == null) {
+            throw new ObjectNotFoundException("Lector no existe.");
+        }
+
+        repo.eliminarLector(lector);
+    }
+
 }

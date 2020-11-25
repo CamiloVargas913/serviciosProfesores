@@ -164,13 +164,21 @@ public class AutorController {
         return Response.status(Response.Status.NO_CONTENT).build();
     }
     
-        @Path("/guardarLector")
+    @Path("/guardarLector")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response guardarLector(@Valid Lector lector) {
         service.guardarLector(lector);
         return Response.status(Response.Status.CREATED).build();
+    }
+    
+    @Path("/eliminarLector/{id}")
+    @DELETE
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response eliminarLector(@PathParam("id") Integer id) throws ObjectNotFoundException {
+        service.eliminarLector(id);
+        return Response.status(Response.Status.NO_CONTENT).build();
     }
 
 }

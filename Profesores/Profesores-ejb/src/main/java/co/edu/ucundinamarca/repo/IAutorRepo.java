@@ -21,7 +21,7 @@ import javax.ejb.Local;
 @Local
 public interface IAutorRepo {
 
-    public List<Autor> listar(String consulta,int page,int size);
+    public List<Autor> listar(String consulta, int page, int size);
 
     public List<ViewAutor> listarVista();
 
@@ -36,17 +36,19 @@ public interface IAutorRepo {
     public void guardarLector(Lector lector);
 
     public void editarLector(Lector lector);
-    
+
     public void eliminar(Autor autor);
+
+    public void eliminarLector(Lector lector);
 
     public void cambiarEstado(Integer id, boolean estado);
 
     public ViewAutor listarVistaId(Integer id);
-    
+
     public Integer totalRegistros();
-    
+
     public List<Lector> listarLector(String consulta);
-    
+
     public Lector listarLectorId(int id);
 
 }

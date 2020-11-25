@@ -95,4 +95,9 @@ public class AutorRepo extends AbstractFacade<Autor, Integer> implements IAutorR
         this.entity.merge(lector);
     }
 
+    @Override
+    public void eliminarLector(Lector lector) {
+        this.entity.remove(lector);
+    }
+
 }

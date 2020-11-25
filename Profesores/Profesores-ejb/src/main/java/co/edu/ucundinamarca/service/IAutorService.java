@@ -43,6 +43,8 @@ public interface IAutorService {
 
     public void eliminarSinLibros(Integer id) throws Exception;
 
+    public void eliminarLector(Integer id) throws ObjectNotFoundException;
+
     public void cambiarEstado(Integer id) throws ObjectNotFoundException;
 
     public List<ViewAutor> listarVista();

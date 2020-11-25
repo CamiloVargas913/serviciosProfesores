@@ -33,6 +33,10 @@ public interface IAutorRepo {
 
     public void editar(Autor autor);
 
+    public void guardarLector(Lector lector);
+
+    public void editarLector(Lector lector);
+    
     public void eliminar(Autor autor);
 
     public void cambiarEstado(Integer id, boolean estado);

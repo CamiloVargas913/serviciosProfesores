@@ -78,10 +78,21 @@ public class AutorRepo extends AbstractFacade<Autor, Integer> implements IAutorR
         Query query = getEntityManager().createNamedQuery(consulta, Lector.class);
         return query.getResultList();
     }
+
     @Override
     public Lector listarLectorId(int id) {
         Lector lector = this.entity.find(Lector.class, id);
         return lector;
+    }
+
+    @Override
+    public void guardarLector(Lector lector) {
+        this.entity.persist(lector);
+    }
+
+    @Override
+    public void editarLector(Lector lector) {
+        this.entity.merge(lector);
     }
 
 }

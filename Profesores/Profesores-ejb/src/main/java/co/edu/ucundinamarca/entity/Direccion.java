@@ -5,6 +5,7 @@
  */
 package co.edu.ucundinamarca.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -70,6 +71,8 @@ public class Direccion implements Serializable {
     public void setBarrio(String barrio) {
         this.barrio = barrio;
     }
+    
+    @JsonIgnore
     public Autor getAutor() {
         return autor;
     }

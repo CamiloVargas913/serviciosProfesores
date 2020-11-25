@@ -31,7 +31,11 @@ public interface IAutorService {
 
     public void guardar(Autor autor);
 
+    public void guardarLector(Lector lector);
+
     public void editar(Autor autor) throws ObjectNotFoundException, ParamRequiredException;
+
+    public void editarLector(Lector lector) throws ObjectNotFoundException, ParamRequiredException;
 
     public void eliminar(Integer id) throws ObjectNotFoundException;
 
@@ -48,10 +52,10 @@ public interface IAutorService {
     public void asociarAutorLector(AutorLector autorLector) throws ObjectNotFoundException, ParamRequiredException;
 
     public List<AutorLectorDto> listarAutorLector(Integer idAutor);
-    
-   public void desasociarAutorLector(int idAutor ,int idLector) throws  ObjectNotFoundException ;
-   
-   public List<Lector> listarLector();
-   
-   public Lector listarLectorId(int id);
+
+    public void desasociarAutorLector(int idAutor, int idLector) throws ObjectNotFoundException;
+
+    public List<Lector> listarLector();
+
+    public Lector listarLectorId(int id);
 }

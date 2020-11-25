@@ -155,5 +155,22 @@ public class AutorController {
         Lector autor = service.listarLectorId(id);
         return Response.status(Response.Status.OK).entity(autor).build();
     }
+    
+    @Path("/editarLector")
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response editarLector(Lector lector) throws ObjectNotFoundException, ParamRequiredException {
+        service.editarLector(lector);
+        return Response.status(Response.Status.NO_CONTENT).build();
+    }
+    
+        @Path("/guardarLector")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response guardarLector(@Valid Lector lector) {
+        service.guardarLector(lector);
+        return Response.status(Response.Status.CREATED).build();
+    }
 
 }

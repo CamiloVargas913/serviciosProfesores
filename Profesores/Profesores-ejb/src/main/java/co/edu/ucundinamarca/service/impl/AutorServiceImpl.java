@@ -211,4 +211,14 @@ public class AutorServiceImpl implements IAutorService {
         return repo.listarLectorId(id);
     }
 
+    @Override
+    public void guardarLector(Lector lector) {
+        repo.guardarLector(lector);
+    }
+
+    @Override
+    public void editarLector(Lector lector) throws ObjectNotFoundException, ParamRequiredException {
+         repo.editarLector(lector);
+    }
+
 }

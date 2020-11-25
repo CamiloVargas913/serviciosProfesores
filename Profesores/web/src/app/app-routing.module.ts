@@ -35,12 +35,6 @@ const routes: Routes = [
           { path: 'agregar', component: AgregarLectorComponent },
           { path: 'edicion/:id', component: AgregarLectorComponent }
         ]
-      },
-      {
-        path: 'conductor', component: ConductoresComponent, children: [
-          { path: 'agregar', component: AgregarconductorComponent },
-          { path: 'edicion/:id', component: AgregarconductorComponent }
-        ], canActivate: [GuardianService]
       }
     ]
   },

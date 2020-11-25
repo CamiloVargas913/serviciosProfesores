@@ -4,7 +4,7 @@
       <mat-icon *ngIf="!sidenav.opened">menu</mat-icon>
       <mat-icon *ngIf="sidenav.opened">close</mat-icon>
     </button>
-    <h1 class="example-app-name">CUNDI EXPRESS</h1>
+    <h1 class="example-app-name">LIBRERIA TU LINEA</h1>
 
     <span class="example-spacer"></span>
     <button mat-icon-button [matMenuTriggerFor]="menu">
@@ -24,19 +24,9 @@
         <span>Autor</span>
       </button>
       <mat-divider></mat-divider>
-      <button mat-menu-item style="cursor: pointer" routerLink="/inicio/ciudad" (click)="sidenav.toggle()">
+      <button mat-menu-item style="cursor: pointer" routerLink="/inicio/lector" (click)="sidenav.toggle()">
         <mat-icon>location_city</mat-icon>
-        <span>Ciudad</span>
-      </button>
-      <mat-divider></mat-divider>
-      <button mat-menu-item style="cursor: pointer" routerLink="/inicio/conductor" (click)="sidenav.toggle()">
-        <mat-icon>people</mat-icon>
-        <span>Conductor</span>
-      </button>
-      <mat-divider></mat-divider>
-      <button mat-menu-item style="cursor: pointer" routerLink="/inicio/vehiculo" (click)="sidenav.toggle()">
-        <mat-icon>local_shipping</mat-icon>
-        <span>Vehiculo</span>
+        <span>Lector</span>
       </button>
       <mat-divider></mat-divider>
     </mat-sidenav>

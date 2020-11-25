@@ -28,6 +28,8 @@ import { AgregarautorComponent } from './pages/autor/agregarautor/agregarautor.c
 import { EliminarautorComponent } from './pages/autor/eliminarautor/eliminarautor.component';
 import { LectorComponent } from './pages/lector/lector.component';
 import { AgregarLectorComponent } from './pages/lector/agregar-lector/agregar-lector.component';
+import { AsociarautorlectorComponent } from './pages/lector/asociarautorlector/asociarautorlector.component';
+import { DesasociarLectorComponent } from './pages/autor/desasociar-lector/desasociar-lector.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +51,9 @@ import { AgregarLectorComponent } from './pages/lector/agregar-lector/agregar-le
     AgregarautorComponent,
     EliminarautorComponent,
     LectorComponent,
-    AgregarLectorComponent
+    AgregarLectorComponent,
+    AsociarautorlectorComponent,
+    DesasociarLectorComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,23 @@
+table {
+  width: 100%;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+td, th {
+  width: 25%;
+}
+
+.center{
+  width: 90%;
+  margin: auto;
+  padding: 2%;
+}
+.buttons{
+  padding: 5px;
+  display: flex;
+  margin-right: 0;
+}

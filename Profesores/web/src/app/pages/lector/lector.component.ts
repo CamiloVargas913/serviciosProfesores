@@ -1,3 +1,4 @@
+import { AsociarautorlectorComponent } from './asociarautorlector/asociarautorlector.component';
 import { Lector } from './../../_model/lector';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -18,7 +19,7 @@ export class LectorComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  displayedColumns: string[] = ['nombre', 'apellido'];
+  displayedColumns: string[] = ['nombre', 'apellido', 'acciones'];
   lectores = new MatTableDataSource<Lector>();
   pageIndex = 0;
   pageSize = 5;
@@ -55,6 +56,25 @@ export class LectorComponent implements OnInit {
       duration: 2500,
     });
   }
+
+  abrirDialogo(lector: Lector) {
+    const dialogRef = this.dialog.open(AsociarautorlectorComponent, {
+      width: '400px',
+      data: { lector }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result != null) {
+        if (result.event === 'Elimino') {
+          this.openSnackBar(result.data);
+          this.listarPaginado();
+        } else if (result.event === 'Cancelo') {
+          this.openSnackBar(result.data);
+        }
+      }
+    });
+  }
+
 
 
 }

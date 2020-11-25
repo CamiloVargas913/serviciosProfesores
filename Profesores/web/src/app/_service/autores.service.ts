@@ -1,3 +1,4 @@
+import { LectorAutor } from './../_model/LectorAutor';
 import { environment } from './../../environments/environment';
 import { Autor } from './../_model/Autor';
 import { HttpClient } from '@angular/common/http';
@@ -21,7 +22,6 @@ export class AutoresService {
   }
 
   editar(autor: Autor) {
-    console.log(autor);
     return this.http.put(`${this.url}/editar`, autor);
   }
 
@@ -35,5 +35,17 @@ export class AutoresService {
 
   cambiarEstado(id: number) {
     return this.http.put(`${this.url}/cambiarEstado/${id}`, '');
+  }
+
+  asociar(lectorAutor: LectorAutor) {
+    return this.http.post(`${this.url}/asociarLector/`, lectorAutor);
+  }
+
+  lectoreAsiciados(id: number) {
+    return this.http.get<any>(`${this.url}/listarLector/${id}`);
+  }
+
+  desasociarLector(idAutor: number, idLector) {
+    return this.http.delete(`${this.url}/desasociarLector/idAutor=${idAutor}/idLector=${idLector}`);
   }
 }

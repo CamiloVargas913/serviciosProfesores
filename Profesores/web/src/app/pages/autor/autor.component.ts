@@ -1,3 +1,4 @@
+import { DesasociarLectorComponent } from './desasociar-lector/desasociar-lector.component';
 import { AutoresService } from './../../_service/autores.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -50,7 +51,25 @@ export class AutorComponent implements OnInit {
   abrirDialogo(autor: Autor, tipo: boolean) {
     const dialogRef = this.dialog.open(EliminarautorComponent, {
       width: '400px',
-      data: { autor , tipo }
+      data: { autor, tipo }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result != null) {
+        if (result.event === 'Elimino') {
+          this.openSnackBar(result.data);
+          this.listarPaginado();
+        } else if (result.event === 'Cancelo') {
+          this.openSnackBar(result.data);
+        }
+      }
+    });
+  }
+
+  desasociarLector(autor: Autor) {
+    const dialogRef = this.dialog.open(DesasociarLectorComponent, {
+      width: '400px',
+      data: { autor }
     });
 
     dialogRef.afterClosed().subscribe(result => {

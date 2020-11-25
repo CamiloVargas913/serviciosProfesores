@@ -38,10 +38,13 @@
     <ng-container matColumnDef="acciones">
       <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
       <mat-cell *matCellDef="let element">
+        <button mat-button color="warn" (click)="desasociarLector(element)">
+          <mat-icon>published_with_changes</mat-icon>
+        </button>
         <button mat-button color="primary" [routerLink]="['edicion', element.id]">
           <mat-icon>edit</mat-icon>
         </button>
-        <button mat-button color="warn" (click)="abrirDialogo(element, false)">
+        <button mat-button color="accent" (click)="abrirDialogo(element, false)">
           <mat-icon>published_with_changes</mat-icon>
         </button>
         <button mat-button color="warn" (click)="abrirDialogo(element,true)">

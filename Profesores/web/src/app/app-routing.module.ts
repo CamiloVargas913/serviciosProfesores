@@ -12,8 +12,11 @@ import { AgregarvehiculoComponent } from './pages/vehiculo/agregarvehiculo/agreg
 import { VehiculoComponent } from './pages/vehiculo/vehiculo.component';
 import { CiudadComponent } from './pages/ciudad/ciudad.component';
 import { DepartamentoComponent } from './pages/departamento/departamento.component';
+import { AgregarLectorComponent } from './pages/lector/agregar-lector/agregar-lector.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { LectorComponent } from './pages/lector/lector.component';
+
 
 
 const routes: Routes = [
@@ -25,6 +28,12 @@ const routes: Routes = [
         path: 'autor', component: AutorComponent, children: [
           { path: 'agregar', component: AgregarautorComponent },
           { path: 'edicion/:id', component: AgregarautorComponent }
+        ]
+      },
+      {
+        path: 'lector', component: LectorComponent, children: [
+          { path: 'agregar', component: AgregarLectorComponent },
+          { path: 'edicion/:id', component: AgregarLectorComponent }
         ]
       },
       {

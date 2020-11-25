@@ -1,0 +1,69 @@
+<mat-card>
+  <mat-card-header style="text-align: center">
+    <mat-card-title>Agregar Lector</mat-card-title>
+  </mat-card-header>
+  <section class="example-container">
+    <form [formGroup]="form" (ngSubmit)="guardar()">
+      <mat-form-field appearance="fill">
+        <mat-label>Nombre</mat-label>
+        <input
+          matInput
+          placeholder="Nombre"
+          formControlName="nombre"
+          maxlength="15"
+        />
+        <ng-container *ngFor="let validation of validationMessages.nombre">
+          <mat-error
+            *ngIf="
+              form.get('nombre').hasError(validation.type) &&
+              (form.get('nombre').dirty || form.get('nombre').touched)
+            "
+            style="font-size: small"
+          >
+            {{ validation.message }}
+          </mat-error>
+        </ng-container>
+      </mat-form-field>
+      <br />
+      <mat-form-field appearance="fill">
+        <mat-label>Editorial</mat-label>
+        <input
+          matInput
+          type="text"
+          placeholder="Editorial"
+          formControlName="apellido"
+        />
+        <ng-container *ngFor="let validation of validationMessages.apellido">
+          <mat-error
+            *ngIf="
+              form.get('apellido').hasError(validation.type) &&
+              (form.get('apellido').dirty || form.get('apellido').touched)
+            "
+            style="font-size: small"
+          >
+            {{ validation.message }}
+          </mat-error>
+        </ng-container>
+      </mat-form-field>
+      <br>
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        [disabled]="form.invalid"
+      >
+        Guardar
+      </button>
+      <button
+        mat-raised-button
+        color="warn"
+        type="submit"
+        style="margin-left: 5%"
+        [routerLink]="['/inicio/libro']"
+      >
+        <mat-icon>cancel</mat-icon>
+        Cancelar
+      </button>
+    </form>
+  </section>
+</mat-card>

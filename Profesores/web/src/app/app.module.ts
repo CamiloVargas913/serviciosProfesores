@@ -26,6 +26,8 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { AutorComponent } from './pages/autor/autor.component';
 import { AgregarautorComponent } from './pages/autor/agregarautor/agregarautor.component';
 import { EliminarautorComponent } from './pages/autor/eliminarautor/eliminarautor.component';
+import { LectorComponent } from './pages/lector/lector.component';
+import { AgregarLectorComponent } from './pages/lector/agregar-lector/agregar-lector.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +47,9 @@ import { EliminarautorComponent } from './pages/autor/eliminarautor/eliminarauto
     MenuComponent,
     AutorComponent,
     AgregarautorComponent,
-    EliminarautorComponent
+    EliminarautorComponent,
+    LectorComponent,
+    AgregarLectorComponent
   ],
   imports: [
     BrowserModule,

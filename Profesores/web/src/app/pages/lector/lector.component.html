@@ -1,0 +1,35 @@
+<section [hidden]="route.children.length != 0">
+  <table mat-table [dataSource]="lectores" matSort class="mat-elevation-z8">
+    <ng-container matColumnDef="nombre">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre</th>
+      <td mat-cell *matCellDef="let element">{{ element.nombre }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="apellido">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Apellido</th>
+      <td mat-cell *matCellDef="let element">{{ element.apellido }}</td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+  <mat-paginator
+    [pageSizeOptions]="[5, 10, 25, 100]"
+    showFirstLastButtons
+  ></mat-paginator>
+  <br />
+  <button
+    mat-raised-button
+    color="primary"
+    type="submit"
+    style="float: right"
+    [routerLink]="['agregar']"
+  >
+    <mat-icon>add_circle_outline</mat-icon>
+    Agregar lector
+  </button>
+</section>
+<section>
+  <router-outlet></router-outlet>
+</section>
+

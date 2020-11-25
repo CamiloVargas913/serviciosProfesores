@@ -1,0 +1,76 @@
+<div class="center">
+  <form [formGroup]="form" #frmVehiculo="ngForm" (ngSubmit)="guardar()">
+    <mat-form-field>
+      <input matInput placeholder="Nombre" formControlName="nombre" minlength="4">
+      <mat-error *ngIf="nombre.invalid && nombre.errors.required">Nombre es requerido</mat-error>
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+      <input matInput placeholder="Apellido" formControlName="apellido" minlength="4">
+      <mat-error *ngIf="apellido.invalid && apellido.errors.required">Apellido es requerido</mat-error>
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+      <input matInput placeholder="Nº Documento" formControlName="documento" maxlength="10" minlength="6">
+      <mat-error *ngIf="documento.invalid && documento.errors.required">Documento es requerido</mat-error>
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+      <input matInput placeholder="Nick" formControlName="nick" minlength="8">
+      <mat-error *ngIf="nick.invalid && nick.errors.required">Nick es requerido</mat-error>
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+      <input matInput placeholder="Direccion" formControlName="direccion" minlength="4">
+      <mat-error *ngIf="direccion.invalid && direccion.errors.required">Direccion es requerido</mat-error>
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+      <input matInput placeholder="Celular " formControlName="celular" minlength="10" maxlength="10" >
+      <mat-error *ngIf="celular.invalid && celular.errors.required">Celular es requerido</mat-error>
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+      <input matInput placeholder="Celular Aux " formControlName="celularAux"  minlength="10" maxlength="10" >
+      <mat-error *ngIf="celularAux.invalid && celularAux.errors.required">Celular aux es requerido</mat-error>
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+      <input matInput placeholder="Correo Electronico " formControlName="correo" minlength="8" >
+      <mat-error *ngIf="correo.invalid && correo.errors.required">Correo es requerido</mat-error>
+      <mat-error *ngIf="direccion.invalid && correo.errors.email">Correo es invalido</mat-error>
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+      <input type="password" matInput placeholder="Contraseña" formControlName="clave" minlength="8" maxlength="15" >
+      <mat-error *ngIf="clave.invalid && clave.errors.required">Clave es requerido</mat-error>
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+      <mat-label>Seleccione Departamento</mat-label>
+      <mat-select (valueChange)="onChange($event)" formControlName="departamento">
+        <mat-option *ngFor="let depa of departamento" [value]="depa.idDepartamento">
+          {{depa.nombre}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+      <mat-label>Seleccione Ciudad</mat-label>
+      <mat-select formControlName="ciudad">
+        <mat-option *ngFor="let ciu of ciudadlist" [value]="ciu.idCiudad">
+          {{ciu.nombre}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <br>
+    <button mat-raised-button color="primary" type="submit" [disabled]="frmVehiculo.invalid">
+      <mat-icon>done</mat-icon>
+      <span>Guardar</span>
+    </button>
+    <button mat-raised-button color="warn" type="button" routerLink="/inicio/conductor">
+      <mat-icon>close</mat-icon>
+      <span>Cancelar</span>
+    </button>
+  </form>
+</div>

@@ -1,0 +1,15 @@
+<ng-container *ngIf="tipo else cambiar">
+  <p>Esta seguro de que desea eliminar al usuario:</p>
+  <h2>{{autor.nombre + " " + autor.apellido }}</h2>
+
+  <button mat-button (click)="eliminar()" color="warn">Eliminar</button>
+</ng-container>
+<ng-template #cambiar>
+  <p>Esta seguro de que desea cambiar el estado al usuario:</p>
+  <h2>{{autor.nombre + " " + autor.apellido }}</h2>
+
+  <button mat-button (click)="cambiaraEstado()" color="warn">Cambiar Estado</button>
+</ng-template>
+
+
+<button mat-button (click)="cerrarDialogo()" color="primary">Cerrar</button>

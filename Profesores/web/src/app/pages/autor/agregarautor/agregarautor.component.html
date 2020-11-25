@@ -1,0 +1,34 @@
+<div class="center">
+  <form [formGroup]="form" (ngSubmit)="guardar()">
+    <mat-form-field>
+      <input matInput placeholder="Nombre" formControlName="nombre" minlength="4">
+      <mat-error *ngIf="nombre.invalid && nombre.errors.required">Nombre es requerido</mat-error>
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+      <input matInput placeholder="Apellido" formControlName="apellido" minlength="4">
+      <mat-error *ngIf="apellido.invalid && apellido.errors.required">Apellido es requerido</mat-error>
+    </mat-form-field>
+    <br>
+
+    <mat-form-field>
+      <input matInput placeholder="Direccion" formControlName="direccion" minlength="4">
+      <mat-error *ngIf="direccion.invalid && direccion.errors.required">Direccion es requerido</mat-error>
+    </mat-form-field>
+    <br>
+
+    <mat-form-field>
+      <input matInput placeholder="Barrio " formControlName="barrio" minlength="4" >
+      <mat-error *ngIf="barrio.invalid && barrio.errors.required">barrio es requerido</mat-error>
+    </mat-form-field>
+    <br>
+    <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">
+      <mat-icon>done</mat-icon>
+      <span>Guardar</span>
+    </button>
+    <button mat-raised-button color="warn" type="button" routerLink="/inicio/autor">
+      <mat-icon>close</mat-icon>
+      <span>Cancelar</span>
+    </button>
+  </form>
+</div>
